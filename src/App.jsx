@@ -1,11 +1,11 @@
 import { db } from "./Firebase/connect";
-import { addDoc, collection, doc, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
 function App() {
   // Estados para armazenar os dados do formulário
-  const [data, setData] = useState("");
+  const [data, setData] = useState(new Date().toISOString().slice(0, 10));
   const [descricao, setDescricao] = useState("");
   const [valor, setValor] = useState("");
   const [categoria, setCategoria] = useState("");
@@ -28,7 +28,7 @@ function App() {
       });
       toast.success("Gasto adicionado com sucesso");
       // Limpa os campos do formulário
-      setData("");
+      setData(new Date().toISOString().slice(0, 10));
       setDescricao("");
       setValor("");
       setCategoria("");
@@ -64,13 +64,10 @@ function App() {
 
   return (
     <>
-      <div className="bg-slate-400 flex flex-col h-screen">
-        <h1 className="text-4xl font-bold text-center p-2">
-          Controle de Gastos - Dev
-        </h1>
-
+      <div className="bg-slate-100 flex flex-col h-screen">
         {/* Formulário para adicionar gasto */}
-        <section>
+        <section className="w-[90%] mx-auto">
+          <h1 className="text-4xl font-bold text-left p-2">Dev Gastos</h1>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -80,10 +77,10 @@ function App() {
           >
             <div className="flex flex-col">
               <label className="font-bold" htmlFor="data">
-                Data de Criação
+                Data (hoje por padrão)
               </label>
               <input
-                className="border border-gray-300 rounded-md p-2"
+                className="border border-gray-900 rounded-md p-2"
                 type="date"
                 placeholder="Data de Criação"
                 value={data}
@@ -95,7 +92,7 @@ function App() {
                 Descrição
               </label>
               <input
-                className="border border-gray-300 rounded-md p-2"
+                className="border border-gray-900 rounded-md p-2"
                 type="text"
                 placeholder="Descrição"
                 value={descricao}
@@ -107,7 +104,7 @@ function App() {
                 Valor
               </label>
               <input
-                className="border border-gray-300 rounded-md p-2"
+                className="border border-gray-900 rounded-md p-2"
                 type="number"
                 placeholder="Valor"
                 value={valor}
@@ -119,20 +116,28 @@ function App() {
                 Categoria
               </label>
               <select
-                className="border border-gray-300 rounded-md p-2"
+                className="border border-gray-900 rounded-md p-2"
                 name="categoria"
                 id="categoria"
                 value={categoria}
                 onChange={(e) => setCategoria(e.target.value)}
               >
+                <option disabled value="">
+                  Selecione uma categoria:
+                </option>
                 <option value="Alimentação">Alimentação</option>
                 <option value="Transporte">Transporte</option>
+                <option value="Moradia">Moradia</option>
+                <option value="Contas e Serviços">Contas e Serviços</option>
                 <option value="Lazer">Lazer</option>
+                <option value="Educação">Educação</option>
+                <option value="Saúde">Saúde</option>
+                <option value="Investimentos">Investimentos</option>
                 <option value="Outros">Outros</option>
               </select>
             </div>
             <button
-              className="bg-blue-500 text-white p-2 rounded-md cursor-pointer"
+              className="text-white p-2 rounded-md cursor-pointer bg-blue-500 hover:bg-blue-600 transition-all duration-300"
               type="submit"
             >
               Adicionar
@@ -141,25 +146,44 @@ function App() {
         </section>
 
         {/* Tabela para listar os gastos */}
-        <section>
-          <table className="w-[80vw] m-auto p-4 border rounded-md">
-            <thead>
+        <section className="w-[90%] mx-auto">
+          <h2 className="text-2xl font-bold text-left p-2">Gastos</h2>
+          <table className="w-full p-4">
+            <thead className="border">
               <tr className="border p-2">
-                <th className="border p-2">Descrição</th>
-                <th className="border p-2">Valor</th>
-                <th className="border p-2">Categoria</th>
+                <th className="bg-slate-500 text-white border p-2">Data</th>
+                <th className="bg-slate-500 text-white border p-2">
+                  Descrição
+                </th>
+                <th className="bg-slate-500 text-white border p-2">Valor</th>
+                <th className="bg-slate-500 text-white border p-2">
+                  Categoria
+                </th>
               </tr>
             </thead>
             <tbody>
-              {gastos.map((gasto) => {
-                return (
-                  <tr key={gasto.id} className="border p-2">
-                    <td className="border p-1">{gasto.descricao}</td>
-                    <td className="border p-1">{gasto.valor}</td>
-                    <td className="border p-1">{gasto.categoria}</td>
+              {/* Map para listar os gastos */}
+              {gastos.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="text-center border p-2">
+                    Nenhum gasto cadastrado
+                  </td>
+                </tr>
+              ) : (
+                gastos.map((gasto) => (
+                  <tr
+                    key={gasto.id}
+                    className="even:bg-slate-200 odd:bg-slate-300 border p-2"
+                  >
+                    <td className="border p-2">
+                      {new Date(gasto.data).toLocaleDateString("pt-BR")}
+                    </td>
+                    <td className="border p-2">{gasto.descricao}</td>
+                    <td className="border p-2">{gasto.valor}</td>
+                    <td className="border p-2">{gasto.categoria}</td>
                   </tr>
-                );
-              })}
+                ))
+              )}
             </tbody>
           </table>
         </section>
