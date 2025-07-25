@@ -1,9 +1,9 @@
-import { db } from "./Firebase/connect";
+import { db } from "../../Firebase/connect";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
-function App() {
+function Home() {
   // Estados para armazenar os dados do formulário
   const [data, setData] = useState(new Date().toISOString().slice(0, 10));
   const [descricao, setDescricao] = useState("");
@@ -148,17 +148,13 @@ function App() {
         {/* Tabela para listar os gastos */}
         <section className="w-[90%] mx-auto">
           <h2 className="text-2xl font-bold text-left p-2">Gastos</h2>
-          <table className="w-full p-4">
-            <thead className="border">
-              <tr className="border p-2">
-                <th className="bg-slate-500 text-white border p-2">Data</th>
-                <th className="bg-slate-500 text-white border p-2">
-                  Descrição
-                </th>
-                <th className="bg-slate-500 text-white border p-2">Valor</th>
-                <th className="bg-slate-500 text-white border p-2">
-                  Categoria
-                </th>
+          <table className="w-full">
+            <thead className="">
+              <tr className="">
+                <th className="bg-black text-white border p-2">Data</th>
+                <th className="bg-black text-white border p-2">Descrição</th>
+                <th className="bg-black text-white border p-2">Valor</th>
+                <th className="bg-black text-white border p-2">Categoria</th>
               </tr>
             </thead>
             <tbody>
@@ -173,13 +169,18 @@ function App() {
                 gastos.map((gasto) => (
                   <tr
                     key={gasto.id}
-                    className="even:bg-slate-200 odd:bg-slate-300 border p-2"
+                    className="even:bg-slate-200 odd:bg-slate-300"
                   >
                     <td className="border p-2">
                       {new Date(gasto.data).toLocaleDateString("pt-BR")}
                     </td>
                     <td className="border p-2">{gasto.descricao}</td>
-                    <td className="border p-2">{gasto.valor}</td>
+                    <td className="border p-2">
+                      {new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(gasto.valor)}
+                    </td>
                     <td className="border p-2">{gasto.categoria}</td>
                   </tr>
                 ))
@@ -193,4 +194,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
