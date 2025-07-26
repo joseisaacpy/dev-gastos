@@ -47,51 +47,73 @@ const Login = () => {
   };
 
   return (
-    <section className="bg-slate-400 w-full h-screen flex flex-col justify-center items-center">
-      <form
-        className="w-[96%] max-w-[600px] bg-white p-4 shadow-md rounded-md flex flex-col gap-4"
-        onSubmit={login}
-      >
-        <h1 className="text-3xl font-bold text-center">
-          Seja bem-vindo novamente!
-        </h1>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="">Digite seu email:</label>
-          <input
-            className="border p-2 rounded-md"
-            type="text"
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-blue-200 to-blue-600 px-4">
+      <div className="bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden max-w-4xl w-full">
+        {/* Formulário de Login */}
+        <section className="w-full md:w-1/2 p-8 flex flex-col justify-center">
+          <form className="flex flex-col gap-4" onSubmit={login}>
+            <h1 className="text-3xl font-bold text-center text-blue-700">
+              Seja bem-vindo novamente!
+            </h1>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="email" className="font-medium">
+                Email:
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                autoFocus
+                onChange={(e) => setEmail(e.target.value)}
+                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="password" className="font-medium">
+                Senha:
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition duration-300"
+            >
+              Entrar
+            </button>
+
+            <p className="text-center text-sm mt-2">
+              Ainda não possui uma conta?{" "}
+              <Link
+                to="/register"
+                className="text-blue-600 font-medium hover:underline"
+              >
+                Registrar
+              </Link>
+            </p>
+          </form>
+        </section>
+
+        {/* Imagem lateral */}
+        <div className="hidden md:flex md:w-1/2">
+          <img
+            src="https://images.pexels.com/photos/259132/pexels-photo-259132.jpeg"
+            alt="Ilustração"
+            className="object-cover w-full"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="">Digite sua senha:</label>
-          <input
-            className="border p-2 rounded-md"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button
-          className="p-2 bg-blue-500 text-white rounded-md mt-4 hover:bg-blue-600 transition duration-300"
-          type="submit"
-        >
-          Login
-        </button>
-        <span className="text-center">
-          Ainda não possui uma conta?
-          <Link
-            className="ml-2 p-2 bg-blue-500 text-white rounded-md mt-4 hover:bg-blue-600 transition duration-300"
-            to="/register"
-          >
-            Registrar
-          </Link>
-        </span>
-      </form>
-      <ToastContainer autoClose={2000} />
-    </section>
+
+        <ToastContainer autoClose={2000} />
+      </div>
+    </div>
   );
 };
 
