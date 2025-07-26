@@ -85,7 +85,7 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition duration-300"
+              className="cursor-pointer w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition duration-300"
             >
               Entrar
             </button>
@@ -103,7 +103,13 @@ const Login = () => {
         </section>
 
         {/* Imagem lateral */}
-        <div className="hidden md:flex md:w-1/2">
+        <div className="hidden md:flex md:relative md:w-1/2">
+          <div className="absolute flex items-center justify-center w-full h-full bg-black opacity-50">
+            <h2 className="z-10 font-bold text-center text-white text-2xl md:text-4xl animate-pulse">
+              Organização é o primeiro passo para a riqueza.
+            </h2>
+          </div>
+
           <img
             src="https://images.pexels.com/photos/259132/pexels-photo-259132.jpeg"
             alt="Ilustração"
