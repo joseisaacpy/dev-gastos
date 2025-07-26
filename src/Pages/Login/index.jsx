@@ -18,8 +18,27 @@ const Login = () => {
       setPassword("");
       toast.success("Login realizado com sucesso");
     } catch (error) {
-      toast.error("Erro ao fazer login");
-      console.log(error);
+      switch (error.code) {
+        case "auth/wrong-password":
+          toast.error("Senha incorreta.");
+          break;
+
+        case "auth/user-not-found":
+          toast.error("Usuário não encontrado.");
+          break;
+
+        case "auth/invalid-email":
+          toast.error("Email inválido.");
+          break;
+
+        case "auth/too-many-requests":
+          toast.error("Muitas solicitações. Tente novamente mais tarde.");
+          break;
+
+        default:
+          toast.error("Erro ao fazer login");
+          break;
+      }
     }
   };
 
