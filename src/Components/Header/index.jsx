@@ -6,7 +6,9 @@ const Header = () => {
   return (
     <header className="">
       <nav className="flex justify-around items-center bg-gray-800 p-4 w-full">
-        <h1 className="text-2xl font-bold text-white">Controle de Gastos</h1>
+        <h1 className="text-lg md:text-2xl font-bold text-white">
+          Controle de Gastos
+        </h1>
         <ul className="flex gap-4 text-white">
           <li>
             <Link to="/">
