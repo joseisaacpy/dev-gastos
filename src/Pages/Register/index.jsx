@@ -17,8 +17,23 @@ const Register = () => {
       setPassword("");
       toast.success("Cadastro realizado com sucesso");
     } catch (error) {
-      toast.error("Erro ao cadastrar");
-      console.log(error);
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          toast.error("Email ja cadastrado.");
+          break;
+
+        case "auth/invalid-email":
+          toast.error("Email inválido.");
+          break;
+
+        case "auth/weak-password":
+          toast.error("Senha fraca.");
+          break;
+
+        default:
+          toast.error("Erro ao cadastrar");
+          break;
+      }
     }
   };
 
@@ -35,6 +50,7 @@ const Register = () => {
             className="border p-2 rounded-md"
             type="text"
             value={email}
+            autoFocus
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -63,7 +79,7 @@ const Register = () => {
           </Link>
         </span>
       </form>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
     </section>
   );
 };

@@ -56,6 +56,7 @@ const Login = () => {
           <input
             className="border p-2 rounded-md"
             type="text"
+            autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -85,7 +86,7 @@ const Login = () => {
           </Link>
         </span>
       </form>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
     </section>
   );
 };
