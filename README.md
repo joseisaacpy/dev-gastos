@@ -1,12 +1,56 @@
-# React + Vite
+# 💸 ControleFácil - App de Controle de Gastos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web simples para controle de gastos pessoais, desenvolvida com **React + Vite** e integrada ao **Firebase (Auth + Firestore)**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Funcionalidades
 
-## Expanding the ESLint configuration
+- 🔐 Cadastro e login de usuários (Firebase Authentication)
+- ➕ Adição de gastos com descrição, valor, categoria e data
+- 📋 Listagem de gastos em tabela
+- 📊 Página de dashboard (em construção/expansão)
+- 🔒 Proteção de rotas para usuários autenticados
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📁 Estrutura do Projeto
+
+```bash
+src/
+├── assets/
+│   └── fonts/
+│       └── Poppins-Regular.ttf
+├── Components/
+│   ├── Footer/
+│   ├── Header/
+│   ├── LayoutHF/
+│   └── Loader/
+├── Firebase/
+│   └── connect.js   #Configuração do Firebase
+├── Pages/
+│   ├── Dashboard/
+│   ├── Error/
+│   ├── Home/
+│   ├── Login/
+│   └── Register/
+├── AllRoutes.jsx   #Gerenciamento das rotas
+├── index.css
+└── main.jsx        # Ponto de entrada da aplicação
+
+Outros arquivos:
+- vite.config.js
+- eslint.config.js
+- .gitignore
+- index.html
+- package.json
+```
+
+## 🛠️ Tecnologias
+- React
+- Vite
+- Firebase (Auth + Firestore)
+- React Router Dom
+- TailwindCSS
+- React Icons
+- React Toastify
