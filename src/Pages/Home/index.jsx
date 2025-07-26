@@ -248,7 +248,7 @@ function Home() {
                 {/* Map para listar os gastos */}
                 {gastos.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="text-center border p-2">
+                    <td colSpan={5} className="text-center border p-2">
                       Nenhum gasto cadastrado
                     </td>
                   </tr>
@@ -269,14 +269,24 @@ function Home() {
                         }).format(gasto.valor)}
                       </td>
                       <td className="border p-2">{gasto.categoria}</td>
-                      <td className="border p-2 flex gap-2 justify-around items-center">
-                        <button onClick={() => deleteGasto(gasto.id)}>
-                          <FaDeleteLeft />
-                        </button>
-                        <button onClick={() => editGasto(gasto.id)}>
-                          <FaRegEdit />
-                        </button>
-                      </td>
+                      <td className="border p-2">
+                        <div className="flex gap-2 justify-around items-center">
+                          <button
+                            className="cursor-pointer"
+                            onClick={() => deleteGasto(gasto.id)}
+                            title="Deletar"
+                          >
+                            <FaDeleteLeft className="text-red-600 hover:text-red-800 transition-all" />
+                          </button>
+                          <button
+                            className="cursor-pointer"
+                            onClick={() => editGasto(gasto.id)}
+                            title="Editar"
+                          >
+                            <FaRegEdit className="text-blue-600 hover:text-blue-800 transition-all" />
+                          </button>
+                        </div>
+                      </td>{" "}
                     </tr>
                   ))
                 )}
