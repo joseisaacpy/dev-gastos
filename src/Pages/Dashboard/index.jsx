@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { db } from "../../Firebase/connect";
-import { getDocs, collection } from "firebase/firestore";
+import { db, auth } from "../../Firebase/connect";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import Loader from "../../Components/Loader";
 import { FaRegMoneyBillAlt, FaRegFileAlt } from "react-icons/fa";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -15,9 +15,24 @@ const Dashboard = () => {
   //   Função pra carregar os gastos
   const getGastos = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, "gastos"));
-      const data = querySnapshot.docs.map((doc) => doc.data());
-      setGastos(data);
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const gastosRef = collection(db, "gastos");
+      const q = query(gastosRef, where("userId", "==", user.uid));
+      const querySnapshot = await getDocs(q);
+
+      const gastosData = querySnapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          data: doc.data().data,
+          descricao: doc.data().descricao,
+          valor: doc.data().valor,
+          categoria: doc.data().categoria,
+        }))
+        .sort((a, b) => new Date(b.data) - new Date(a.data));
+
+      setGastos(gastosData);
     } catch (error) {
       console.log(error);
     } finally {

@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import Loader from "../../Components/Loader";
 import { toast, ToastContainer } from "react-toastify";
-import { FaMoneyBillAlt } from "react-icons/fa";
+import { FaMoneyBillAlt, FaRegEdit } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
-import { FaRegEdit } from "react-icons/fa";
 import { db, auth } from "../../Firebase/connect";
 import {
   doc,
@@ -12,6 +11,8 @@ import {
   getDocs,
   deleteDoc,
   updateDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
@@ -38,7 +39,6 @@ function Home() {
       toast.error("Preencha todos os campos");
       return;
     }
-
     try {
       if (editGastoId) {
         // Atualizar gasto existente
@@ -75,7 +75,6 @@ function Home() {
       console.log(error);
     }
   };
-
   // Função para deletar gasto no banco
   const deleteGasto = async (id) => {
     try {
@@ -102,7 +101,13 @@ function Home() {
   // Função para pegar os gastos no banco
   const getGastos = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, "gastos"));
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const gastosRef = collection(db, "gastos");
+      const q = query(gastosRef, where("userId", "==", user.uid));
+      const querySnapshot = await getDocs(q);
+
       const gastosData = querySnapshot.docs
         .map((doc) => ({
           id: doc.id,
@@ -112,8 +117,8 @@ function Home() {
           categoria: doc.data().categoria,
         }))
         .sort((a, b) => new Date(b.data) - new Date(a.data));
+
       setGastos(gastosData);
-      console.log(querySnapshot);
     } catch (error) {
       console.log(error);
     } finally {
@@ -236,7 +241,7 @@ function Home() {
           <div className="overflow-x-auto">
             <table className="w-full shadow-md">
               <thead className="">
-                <tr className="">
+                <tr>
                   <th className="bg-black text-white border p-2">Data</th>
                   <th className="bg-black text-white border p-2">Descrição</th>
                   <th className="bg-black text-white border p-2">Valor</th>
@@ -286,7 +291,7 @@ function Home() {
                             <FaRegEdit className="text-blue-600 hover:text-blue-800 transition-all" />
                           </button>
                         </div>
-                      </td>{" "}
+                      </td>
                     </tr>
                   ))
                 )}
