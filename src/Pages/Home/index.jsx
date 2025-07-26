@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
+import Loader from "../../Components/Loader";
+import { toast, ToastContainer } from "react-toastify";
+import { FaMoneyBillAlt } from "react-icons/fa";
 import { db } from "../../Firebase/connect";
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import { useState, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
 
 function Home() {
   // Estados para armazenar os dados do formulário
@@ -12,6 +14,8 @@ function Home() {
 
   // Estado pra armazenar os gastos
   const [gastos, setGastos] = useState([]);
+  // Estado pra armazenar o status do loader
+  const [loading, setLoading] = useState(true);
 
   // Função para adicionar gasto no banco
   const addGasto = async () => {
@@ -23,7 +27,7 @@ function Home() {
       await addDoc(collection(db, "gastos"), {
         data,
         descricao,
-        valor,
+        valor: Number(valor),
         categoria,
       });
       toast.success("Gasto adicionado com sucesso");
@@ -43,17 +47,22 @@ function Home() {
   const getGastos = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "gastos"));
-      const gastosData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        data: doc.data().data,
-        descricao: doc.data().descricao,
-        valor: doc.data().valor,
-        categoria: doc.data().categoria,
-      }));
+      const gastosData = querySnapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          data: doc.data().data,
+          descricao: doc.data().descricao,
+          valor: doc.data().valor,
+          categoria: doc.data().categoria,
+        }))
+        .sort((a, b) => new Date(b.data) - new Date(a.data));
       setGastos(gastosData);
       console.log(querySnapshot);
     } catch (error) {
       console.log(error);
+    } finally {
+      // Para de carregar
+      setLoading(false);
     }
   };
 
@@ -62,22 +71,28 @@ function Home() {
     getGastos();
   }, []);
 
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <>
-      <div className="bg-slate-100 flex flex-col h-screen">
+      <div className="bg-slate-100 flex flex-col min-h-screen">
         {/* Formulário para adicionar gasto */}
         <section className="w-[90%] mx-auto">
-          <h1 className="text-4xl font-bold text-left p-2">Dev Gastos</h1>
+          <h1 className="text-4xl font-extrabold p-4 flex items-center gap-3 text-blue-700">
+            <FaMoneyBillAlt className="text-3xl" />
+            ControleFácil
+          </h1>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               addGasto();
             }}
-            className="flex flex-col gap-4 p-4 border rounded-md"
+            className="flex flex-col gap-4 p-4 border rounded-md shadow-md"
           >
             <div className="flex flex-col">
               <label className="font-bold" htmlFor="data">
-                Data (hoje por padrão)
+                Data (hoje por padrão):
               </label>
               <input
                 className="border border-gray-900 rounded-md p-2"
@@ -89,7 +104,7 @@ function Home() {
             </div>
             <div className="flex flex-col">
               <label className="font-bold" htmlFor="descricao">
-                Descrição
+                Descrição:
               </label>
               <input
                 className="border border-gray-900 rounded-md p-2"
@@ -101,12 +116,13 @@ function Home() {
             </div>
             <div className="flex flex-col">
               <label className="font-bold" htmlFor="valor">
-                Valor
+                Valor:
               </label>
               <input
                 className="border border-gray-900 rounded-md p-2"
                 type="number"
                 placeholder="Valor"
+                step={0.01}
                 value={valor}
                 onChange={(e) => setValor(e.target.value)}
               />
@@ -147,46 +163,48 @@ function Home() {
 
         {/* Tabela para listar os gastos */}
         <section className="w-[90%] mx-auto">
-          <h2 className="text-2xl font-bold text-left p-2">Gastos</h2>
-          <table className="w-full">
-            <thead className="">
-              <tr className="">
-                <th className="bg-black text-white border p-2">Data</th>
-                <th className="bg-black text-white border p-2">Descrição</th>
-                <th className="bg-black text-white border p-2">Valor</th>
-                <th className="bg-black text-white border p-2">Categoria</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Map para listar os gastos */}
-              {gastos.length === 0 ? (
-                <tr>
-                  <td colSpan={4} className="text-center border p-2">
-                    Nenhum gasto cadastrado
-                  </td>
+          <h2 className="text-2xl font-bold text-left p-2">Seus Gastos:</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full shadow-md">
+              <thead className="">
+                <tr className="">
+                  <th className="bg-black text-white border p-2">Data</th>
+                  <th className="bg-black text-white border p-2">Descrição</th>
+                  <th className="bg-black text-white border p-2">Valor</th>
+                  <th className="bg-black text-white border p-2">Categoria</th>
                 </tr>
-              ) : (
-                gastos.map((gasto) => (
-                  <tr
-                    key={gasto.id}
-                    className="even:bg-slate-200 odd:bg-slate-300"
-                  >
-                    <td className="border p-2">
-                      {new Date(gasto.data).toLocaleDateString("pt-BR")}
+              </thead>
+              <tbody>
+                {/* Map para listar os gastos */}
+                {gastos.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="text-center border p-2">
+                      Nenhum gasto cadastrado
                     </td>
-                    <td className="border p-2">{gasto.descricao}</td>
-                    <td className="border p-2">
-                      {new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(gasto.valor)}
-                    </td>
-                    <td className="border p-2">{gasto.categoria}</td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  gastos.map((gasto) => (
+                    <tr
+                      key={gasto.id}
+                      className="even:bg-slate-200 odd:bg-slate-300"
+                    >
+                      <td className="border p-2">
+                        {new Date(gasto.data).toLocaleDateString("pt-BR")}
+                      </td>
+                      <td className="border p-2">{gasto.descricao}</td>
+                      <td className="border p-2 font-bold">
+                        {new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(gasto.valor)}
+                      </td>
+                      <td className="border p-2">{gasto.categoria}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </section>
         <ToastContainer />
       </div>
