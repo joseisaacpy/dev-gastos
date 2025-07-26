@@ -2,13 +2,25 @@ import { useState, useEffect } from "react";
 import Loader from "../../Components/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import { FaMoneyBillAlt } from "react-icons/fa";
+import { FaDeleteLeft } from "react-icons/fa6";
+import { FaRegEdit } from "react-icons/fa";
 import { db, auth } from "../../Firebase/connect";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  doc,
+  addDoc,
+  collection,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 
 function Home() {
+  // Hook para navegação
   const navigate = useNavigate();
+  // Estado pra editar gasto
+  const [editGastoId, setEditGastoId] = useState(null);
   // Estados para armazenar os dados do formulário
   const [data, setData] = useState(new Date().toISOString().slice(0, 10));
   const [descricao, setDescricao] = useState("");
@@ -26,15 +38,32 @@ function Home() {
       toast.error("Preencha todos os campos");
       return;
     }
+
     try {
-      await addDoc(collection(db, "gastos"), {
-        data,
-        descricao,
-        valor: Number(valor),
-        categoria,
-      });
-      toast.success("Gasto adicionado com sucesso");
-      // Limpa os campos do formulário
+      if (editGastoId) {
+        // Atualizar gasto existente
+        const docRef = doc(db, "gastos", editGastoId);
+        await updateDoc(docRef, {
+          data,
+          descricao,
+          valor: Number(valor),
+          categoria,
+        });
+        toast.success("Gasto atualizado com sucesso.");
+        setEditGastoId(null); // Sai do modo edição
+      } else {
+        // Adicionar novo gasto
+        await addDoc(collection(db, "gastos"), {
+          data,
+          descricao,
+          valor: Number(valor),
+          categoria,
+          userId: auth.currentUser.uid, // opcional se quiser associar ao usuário
+        });
+        toast.success("Gasto adicionado com sucesso.");
+      }
+
+      // Limpa o formulário
       setData(new Date().toISOString().slice(0, 10));
       setDescricao("");
       setValor("");
@@ -42,8 +71,32 @@ function Home() {
       // Atualiza a lista de gastos
       getGastos();
     } catch (error) {
-      toast.error("Erro ao adicionar gasto");
+      toast.error("Erro ao salvar gasto.");
       console.log(error);
+    }
+  };
+
+  // Função para deletar gasto no banco
+  const deleteGasto = async (id) => {
+    try {
+      const docRef = doc(db, "gastos", id);
+      await deleteDoc(docRef);
+      toast.success("Gasto deletado com sucesso.");
+      getGastos();
+    } catch (error) {
+      toast.error("Erro ao deletar gasto.");
+      console.log(error);
+    }
+  };
+  // Função para editar gasto no banco
+  const editGasto = (id) => {
+    const gasto = gastos.find((g) => g.id === id);
+    if (gasto) {
+      setData(gasto.data);
+      setDescricao(gasto.descricao);
+      setValor(gasto.valor);
+      setCategoria(gasto.categoria);
+      setEditGastoId(id); // Esse estado deve existir
     }
   };
   // Função para pegar os gastos no banco
@@ -172,7 +225,7 @@ function Home() {
               className="text-white p-2 rounded-md cursor-pointer bg-blue-500 hover:bg-blue-600 transition-all duration-300"
               type="submit"
             >
-              Adicionar
+              {editGastoId ? "Salvar Edição" : "Adicionar"}
             </button>
           </form>
         </section>
@@ -188,6 +241,7 @@ function Home() {
                   <th className="bg-black text-white border p-2">Descrição</th>
                   <th className="bg-black text-white border p-2">Valor</th>
                   <th className="bg-black text-white border p-2">Categoria</th>
+                  <th className="bg-black text-white border p-2">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -215,6 +269,14 @@ function Home() {
                         }).format(gasto.valor)}
                       </td>
                       <td className="border p-2">{gasto.categoria}</td>
+                      <td className="border p-2 flex gap-2 justify-around items-center">
+                        <button onClick={() => deleteGasto(gasto.id)}>
+                          <FaDeleteLeft />
+                        </button>
+                        <button onClick={() => editGasto(gasto.id)}>
+                          <FaRegEdit />
+                        </button>
+                      </td>
                     </tr>
                   ))
                 )}
