@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { auth } from "../../Firebase/connect";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 const Register = () => {
+  const navigate = useNavigate();
   // Estados pra armazenar os dados
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,11 +16,14 @@ const Register = () => {
       // Limpa os campos do formulário
       setEmail("");
       setPassword("");
-      toast.success("Cadastro realizado com sucesso");
+      toast.success("Cadastro realizado com sucesso. Redirecionando...");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (error) {
       switch (error.code) {
         case "auth/email-already-in-use":
-          toast.error("Email ja cadastrado.");
+          toast.error("Email já cadastrado.");
           break;
 
         case "auth/invalid-email":

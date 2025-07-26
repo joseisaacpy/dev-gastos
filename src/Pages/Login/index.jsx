@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Firebase/connect";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
   // Estados pra armazenar os dados
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +17,10 @@ const Login = () => {
       // Limpa os campos do formulário
       setEmail("");
       setPassword("");
-      toast.success("Login realizado com sucesso");
+      toast.success("Login realizado com sucesso. Redirecionando...");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
