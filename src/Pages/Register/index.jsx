@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../../Firebase/connect";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
@@ -40,6 +40,11 @@ const Register = () => {
       }
     }
   };
+
+  // useEffect
+  useEffect(() => {
+    document.title = "Registro";
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-blue-600 to-blue-200 px-4">

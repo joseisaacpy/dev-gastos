@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Firebase/connect";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -45,6 +45,11 @@ const Login = () => {
       }
     }
   };
+
+  // UseEffect
+  useEffect(() => {
+    document.title = "Login";
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-blue-200 to-blue-600 px-4">

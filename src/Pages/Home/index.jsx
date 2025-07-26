@@ -2,10 +2,13 @@ import { useState, useEffect } from "react";
 import Loader from "../../Components/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import { FaMoneyBillAlt } from "react-icons/fa";
-import { db } from "../../Firebase/connect";
+import { db, auth } from "../../Firebase/connect";
 import { addDoc, collection, getDocs } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
 
 function Home() {
+  const navigate = useNavigate();
   // Estados para armazenar os dados do formulário
   const [data, setData] = useState(new Date().toISOString().slice(0, 10));
   const [descricao, setDescricao] = useState("");
@@ -68,8 +71,21 @@ function Home() {
 
   // useEffect para buscar os dados do banco
   useEffect(() => {
-    getGastos();
-  }, []);
+    // Muda o title da aba
+    document.title = "ControleFácil - Home";
+    // Função pra verificar se o usuário está logado
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      // Se não tiver logado, redireciona para a tela de login
+      if (!user) {
+        navigate("/login");
+      } else {
+        setLoading(false); // Para de carregar
+        getGastos();
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   if (loading) {
     return <Loader />;

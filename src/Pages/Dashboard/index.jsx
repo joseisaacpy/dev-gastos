@@ -28,6 +28,7 @@ const Dashboard = () => {
 
   // Chama a função de buscar dados com useEffect
   useEffect(() => {
+    document.title = "Dashboard";
     getGastos();
   });
 
