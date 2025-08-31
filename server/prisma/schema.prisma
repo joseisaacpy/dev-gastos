@@ -22,7 +22,7 @@ enum TipoCategoria {
 
 model Categoria {
   id     String        @id @default(auto()) @map("_id") @db.ObjectId // mapeia o nome da col
-  nome   TipoCategoria
+  nome   TipoCategoria @unique
   gastos Gasto[] // Referência dos gastos
 
   @@map("categorias")
