@@ -1,7 +1,6 @@
 // Imports
 import express from "express";
 import cors from "cors";
-import prisma from "../prisma/prisma.js";
 import gastosRoutes from "./routes/gastos.routes.js";
 
 // Contantes
