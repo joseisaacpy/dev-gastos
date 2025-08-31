@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./Components/MainLayout";
 // Importa as páginas
 // import ListarGastos from "./Pages/Gastos/ListarGastos";
+import CadastrarGasto from "./Pages/Gastos/CadastrarGasto";
 
 const AllRoutes = () => {
   return (
@@ -13,14 +14,7 @@ const AllRoutes = () => {
         {/* Rota com o layout */}
         <Route element={<MainLayout />}>
           {/* Rota inicial */}
-          <Route
-            path="/"
-            element={
-              <>
-                <h1 className="text-4xl">test</h1>
-              </>
-            }
-          />
+          <Route path="/" element={<CadastrarGasto />} />
         </Route>
         {/* Rota de login */}
         {/* <Route></Route> */}
