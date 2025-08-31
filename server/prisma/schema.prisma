@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+  // output é opcional
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Categoria {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId // mapeia o nome da col
+  nome   String
+  gastos Gasto[]
+}
+
+model Gasto {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId // mapeia o nome da col
+  nome        String // cinema
+  descricao   String? // saida ao cinema com amigos
+  preco       Float // valor do ingresso
+  data        DateTime   @default(now()) // 08-10-2025
+  Categoria   Categoria? @relation(fields: [categoriaId], references: [id])
+  categoriaId String?    @db.ObjectId
+
+  @@map("Gastos") // mapeia o nome do banco
+}
