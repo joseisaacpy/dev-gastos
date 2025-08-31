@@ -1,1 +1,26 @@
+/* Importa font externa (poppins) */
+@font-face {
+  font-family: "Poppins Regular";
+  src: url(./assets/Poppins-Regular.ttf);
+}
+
+/* Importa o tailwincss */
 @import "tailwindcss";
+
+/* Escopo de variáveis CSS */
+@theme {
+  /* Cores */
+  --color-primary: #1e40af; /* Azul escuro principal */
+  --color-primary-light: #3b82f6; /* Azul claro (hover, highlights) */
+  --color-secondary: #111827; /* Preto/near-black (backgrounds, textos) */
+  --color-secondary-light: #374151; /* Cinza escuro para contraste */
+  --color-background: #f9fafb; /* Branco suave, minimal */
+  --color-white: #ffffff; /* Branco puro */
+  --color-accent: #60a5fa; /* Azul suave de destaque */
+  --color-success: #10b981; /* Verde minimal para sucesso */
+  --color-warning: #f59e0b; /* Amarelo minimal para alertas */
+  --color-error: #ef4444; /* Vermelho minimal para erros */
+  --color-muted: #9ca3af; /* Cinza suave para textos secundários */
+  /* Fonts */
+  --font-poppins-regular: "Poppins Regular";
+}
