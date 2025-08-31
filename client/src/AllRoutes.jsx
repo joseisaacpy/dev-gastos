@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Importa o layout padrão com header e footer
 import MainLayout from "./Components/MainLayout";
 // Importa as páginas
-// import ListarGastos from "./Pages/Gastos/ListarGastos";
-import CadastrarGasto from "./Pages/Gastos/CadastrarGasto";
 import Painel from "./Pages/Painel";
+import CadastrarGasto from "./Pages/Gastos/CadastrarGasto";
+import ListarGastos from "./Pages/Gastos/ListarGastos";
+// import Dashboard from "./Pages/Dashboard";
 
 const AllRoutes = () => {
   return (
@@ -19,7 +20,9 @@ const AllRoutes = () => {
           {/* Rota de cadastro */}
           <Route path="/novoGasto" element={<CadastrarGasto />} />
           {/* Rota para listar gastos */}
-          {/* <Route path="/gastos" element={<ListarGastos />} /> */}
+          <Route path="/gastos" element={<ListarGastos />} />
+          {/* Rota para dash */}
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         </Route>
         {/* Rota de login */}
         {/* <Route></Route> */}
