@@ -8,10 +8,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TipoCategoria {
+  ALIMENTACAO
+  MORADIA
+  TRANSPORTE
+  SAUDE
+  EDUCACAO
+  LAZER
+  ROUPAS
+  SERVICOS
+  OUTROS
+}
+
 model Categoria {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId // mapeia o nome da col
-  nome   String
-  gastos Gasto[]
+  id     String        @id @default(auto()) @map("_id") @db.ObjectId // mapeia o nome da col
+  nome   TipoCategoria
+  gastos Gasto[] // Referência dos gastos
+
+  @@map("categorias")
 }
 
 model Gasto {
@@ -20,8 +34,10 @@ model Gasto {
   descricao   String? // saida ao cinema com amigos
   preco       Float // valor do ingresso
   data        DateTime   @default(now()) // 08-10-2025
-  Categoria   Categoria? @relation(fields: [categoriaId], references: [id])
-  categoriaId String?    @db.ObjectId
+  categoria   Categoria? @relation(fields: [categoriaId], references: [id]) // Referência da categoria
+  categoriaId String?    @db.ObjectId // Id da categoria
 
-  @@map("Gastos") // mapeia o nome do banco
+  @@index([categoriaId]) // indice de categoria
+  @@index([data]) // indice por data
+  @@map("gastos") // mapeia o nome do banco
 }
