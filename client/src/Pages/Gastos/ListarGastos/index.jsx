@@ -1,14 +1,26 @@
+// Importa o loader
+import Loader from "../../../Components/Loader";
+
+// Importa hooks
 import { useState, useEffect } from "react";
 const ListarGastos = () => {
   // Estado para armazenar gastos
   const [gastos, setGastos] = useState([]);
+  // Estado para controlar o Loader
+  const [loading, setLoading] = useState(true);
 
   // Função para consumir API de gastos
   const pegarGastos = async () => {
-    const url = `${import.meta.env.VITE_API_URL}/gastos`;
-    const request = await fetch(url);
-    const response = await request.json();
-    setGastos(response);
+    try {
+      const url = `${import.meta.env.VITE_API_URL}/gastos`;
+      const request = await fetch(url);
+      const response = await request.json();
+      setGastos(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   //   useEffect para mudar titulo e chamar função
@@ -16,6 +28,10 @@ const ListarGastos = () => {
     document.title = "Seus Gastos";
     pegarGastos();
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <>
       <table className="border">
