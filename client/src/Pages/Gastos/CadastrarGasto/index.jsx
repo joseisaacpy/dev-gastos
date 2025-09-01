@@ -1,8 +1,16 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const CadastrarGasto = () => {
   // Estado para armazenar as categorias
   const [categorias, setCategorias] = useState([]);
+  // Estados para inputs
+  const [form, setForm] = useState({
+    nome: "",
+    descricao: "",
+    preco: "",
+    categoriaId: "",
+  });
 
   // Função para pegar as categorias da API
   const pegarCategorias = async () => {
@@ -12,6 +20,53 @@ const CadastrarGasto = () => {
     setCategorias(response.categorias);
   };
 
+  // Função para cadastrar um gasto
+  const cadastrarGasto = async (gasto) => {
+    try {
+      const url = `${import.meta.env.VITE_API_URL}/gastos`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(gasto),
+      });
+
+      // Se não foi bem sucedido, retorna um erro
+      if (!response.ok) {
+        throw new Error("Erro ao cadastrar gasto");
+      }
+      // Mensagem de sucesso
+      toast.success("oi");
+    } catch (error) {
+      console.error("Erro ao cadastrar gasto: ", error);
+    }
+  };
+  // Função para lidar com o envio do form
+  const handleSubmit = async (e) => {
+    // Evita o recarregamento
+    e.preventDefault();
+    // Gasto para usar na função de cadastro
+    const gasto = {
+      nome: form.nome,
+      descricao: form.descricao,
+      preco: parseFloat(form.preco),
+      categoriaId: form.categoriaId,
+    };
+    try {
+      // Chama a função de cadastro
+      await cadastrarGasto(gasto);
+
+      // Reseta o formulário para os valores iniciais
+      setForm({
+        nome: "",
+        descricao: "",
+        preco: "",
+        categoriaId: "",
+      });
+    } catch (error) {
+      console.error("Erro ao cadastrar gasto:", error);
+    }
+  };
+
   // Atualiza nome e chama função de pegar categorias
   useEffect(() => {
     document.title = "Cadastro de Gasto";
@@ -19,7 +74,7 @@ const CadastrarGasto = () => {
   }, []);
 
   return (
-    <form className="max-w-md mx-auto p-4 space-y-4">
+    <form className="max-w-md mx-auto p-4 space-y-4" onSubmit={handleSubmit}>
       {/* Nome */}
       <div>
         <label htmlFor="nome" className="block font-medium">
@@ -32,6 +87,10 @@ const CadastrarGasto = () => {
           className="w-full border rounded p-2"
           placeholder="Ex: Cinema"
           required
+          value={form.nome}
+          onChange={(e) =>
+            setForm({ ...form, [e.target.name]: e.target.value })
+          }
         />
       </div>
 
@@ -46,6 +105,10 @@ const CadastrarGasto = () => {
           type="text"
           className="w-full border rounded p-2"
           placeholder="Ex: Saída ao cinema com amigos"
+          value={form.descricao}
+          onChange={(e) =>
+            setForm({ ...form, [e.target.name]: e.target.value })
+          }
         />
       </div>
 
@@ -62,24 +125,31 @@ const CadastrarGasto = () => {
           className="w-full border rounded p-2"
           placeholder="Ex: 45.90"
           required
+          value={form.preco}
+          onChange={(e) =>
+            setForm({ ...form, [e.target.name]: e.target.value })
+          }
         />
       </div>
 
       {/* Categoria */}
       <div>
-        <label htmlFor="categoria" className="block font-medium">
+        <label htmlFor="categoriaId" className="block font-medium">
           Categoria
         </label>
         <select
-          name="categoria"
-          id="categoria"
+          name="categoriaId"
+          id="categoriaId"
           className="w-full border rounded p-2"
-          defaultValue=""
+          value={form.categoriaId}
+          onChange={(e) =>
+            setForm({ ...form, [e.target.name]: e.target.value })
+          }
         >
-          <option value="" selected disabled>
+          <option value="" disabled>
             Selecione:
           </option>
-          ;
+
           {categorias.map((cat) => {
             return (
               <option key={cat.id} value={cat.id}>

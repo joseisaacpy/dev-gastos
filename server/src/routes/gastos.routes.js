@@ -13,9 +13,9 @@ router.post("/", async (req, res) => {
     // Gasto vem do body da req
     const { nome, descricao, preco, categoriaId } = req.body;
     // Validação de dados obrigatórios
-    if (!nome || !preco) {
+    if (!nome || !preco || !categoriaId) {
       return res.status(400).json({
-        msg: "Nome e Preço são obrigatórios para cadastrar um gasto.",
+        msg: "Nome, Preço e Categoria são obrigatórios para cadastrar um gasto.",
       });
     }
     // Cria o novo gasto com os dados
