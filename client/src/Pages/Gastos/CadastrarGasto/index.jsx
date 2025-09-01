@@ -30,12 +30,24 @@ const CadastrarGasto = () => {
         body: JSON.stringify(gasto),
       });
 
+      // Pega a resposta do back
+      const data = await response.json();
+
       // Se não foi bem sucedido, retorna um erro
       if (!response.ok) {
-        throw new Error("Erro ao cadastrar gasto");
+        // Mensagem de erro
+        toast.error(data.msg || "Erro ao cadastrar gasto.");
+        throw new Error(data.msg || "Erro ao cadastrar gasto");
       }
       // Mensagem de sucesso
-      toast.success("oi");
+      toast.success(data.msg || "Gasto cadastrado com sucesso!");
+      // Reseta o formulário para os valores iniciais
+      setForm({
+        nome: "",
+        descricao: "",
+        preco: "",
+        categoriaId: "",
+      });
     } catch (error) {
       console.error("Erro ao cadastrar gasto: ", error);
     }
@@ -54,14 +66,6 @@ const CadastrarGasto = () => {
     try {
       // Chama a função de cadastro
       await cadastrarGasto(gasto);
-
-      // Reseta o formulário para os valores iniciais
-      setForm({
-        nome: "",
-        descricao: "",
-        preco: "",
-        categoriaId: "",
-      });
     } catch (error) {
       console.error("Erro ao cadastrar gasto:", error);
     }

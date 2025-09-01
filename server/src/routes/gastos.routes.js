@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
         nome,
         descricao,
         preco,
+
         categoriaId,
       },
       include: {
