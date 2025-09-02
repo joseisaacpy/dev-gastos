@@ -59,6 +59,24 @@ router.get("/", async (req, res) => {
 // UPDATE
 
 // DELETE
+router.delete("/:id", async (req, res) => {
+  // Pega o ID nos parâmetros
+  const { id } = req.params;
+  try {
+    // Se não tiver id, lança uma mensagem
+    if (!id) {
+      return res.status(400).json({ msg: "ID é obrigatório" });
+    }
+    // Deleta o gasto pelo id
+    await prisma.gasto.delete({
+      where: { id: id },
+    });
+    return res.json({ msg: "Gasto deletado com sucesso" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Erro ao deletar gasto" });
+  }
+});
 
 // Exporta o Router para ser usado em outros arquivos da aplicação
 export default router;
