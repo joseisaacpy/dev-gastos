@@ -7,6 +7,6 @@ import AllRoutes from "./AllRoutes";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AllRoutes />
-    <ToastContainer autoClose={1500} />
+    <ToastContainer autoClose={1200} />
   </StrictMode>
 );

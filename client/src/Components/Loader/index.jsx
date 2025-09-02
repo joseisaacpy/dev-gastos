@@ -1,9 +1,8 @@
 const Loader = () => {
   return (
     <>
-      <div className="min-h-screen min-w-screen flex flex-col items-center justify-center gap-2">
-        <div className="border-2 rounded-full border-t-transparent w-20 h-20 animate-spin"></div>
-        <h1 className="text-2xl">Carregando...</h1>
+      <div className="overflow-hidden min-h-screen min-w-screen bg-slate-100 flex flex-col items-center justify-center">
+        <div className="border-4 border-b-gray-800 rounded-full border-t-transparent w-10 h-10 animate-spin"></div>
       </div>
     </>
   );
