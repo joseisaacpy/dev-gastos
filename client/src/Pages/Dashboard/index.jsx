@@ -27,7 +27,7 @@ const Dashboard = () => {
   // Função de consumir API
   const consumirApi = async () => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/gastos`;
+      const url = `${import.meta.env.VITE_API_URL}/api/gastos`;
       const response = await fetch(url);
       const data = await response.json();
       setGastos(data);

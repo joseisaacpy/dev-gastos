@@ -14,7 +14,7 @@ const CadastrarGasto = () => {
 
   // Função para pegar as categorias da API
   const pegarCategorias = async () => {
-    const url = `${import.meta.env.VITE_API_URL}/categorias`;
+    const url = `${import.meta.env.VITE_API_URL}/api/categorias`;
     const request = await fetch(url);
     const response = await request.json();
     setCategorias(response.categorias);
@@ -23,7 +23,7 @@ const CadastrarGasto = () => {
   // Função para cadastrar um gasto
   const cadastrarGasto = async (gasto) => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/gastos`;
+      const url = `${import.meta.env.VITE_API_URL}/api/gastos`;
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

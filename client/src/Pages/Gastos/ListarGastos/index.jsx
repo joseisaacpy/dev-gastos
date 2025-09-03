@@ -17,7 +17,7 @@ const ListarGastos = () => {
   // Função para consumir API de gastos
   const pegarGastos = async () => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/gastos`;
+      const url = `${import.meta.env.VITE_API_URL}/api/gastos`;
       const request = await fetch(url);
       const response = await request.json();
       setGastos(response);
@@ -30,7 +30,7 @@ const ListarGastos = () => {
   // Função para deletar um gasto
   const deletarGasto = async (id) => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/gastos/${id}`;
+      const url = `${import.meta.env.VITE_API_URL}/api/gastos/${id}`;
       console.log(id);
       const response = await fetch(url, {
         method: "DELETE",
