@@ -6,7 +6,7 @@ import MainLayout from "./Components/MainLayout";
 import Painel from "./Pages/Painel";
 import CadastrarGasto from "./Pages/Gastos/CadastrarGasto";
 import ListarGastos from "./Pages/Gastos/ListarGastos";
-// import Dashboard from "./Pages/Dashboard";
+import Dashboard from "./Pages/Dashboard";
 
 const AllRoutes = () => {
   return (
@@ -22,7 +22,7 @@ const AllRoutes = () => {
           {/* Rota para listar gastos */}
           <Route path="/gastos" element={<ListarGastos />} />
           {/* Rota para dash */}
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         {/* Rota de login */}
         {/* <Route></Route> */}
