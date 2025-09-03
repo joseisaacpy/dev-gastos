@@ -1,4 +1,3 @@
 [build]
-base = "clienri"
 publish = "dist"
 command = "npm run build"
