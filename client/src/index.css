@@ -10,8 +10,10 @@
 /* Escopo de variáveis CSS */
 @theme {
   /* Cores */
-  --color-primary: #1e40af; /* Azul escuro principal */
-  --color-primary-light: #3b82f6; /* Azul claro (hover, highlights) */
+  --color-primary-light: #bfdbfe; /* Azul bem claro */
+  --color-primary: #3b82f6; /* Azul principal */
+  --color-primary-strong: #1d4ed8; /* Azul forte */
+  --color-primary-dark: #1e3a8a; /* Azul bem escuro */
   --color-secondary: #111827; /* Preto/near-black (backgrounds, textos) */
   --color-secondary-light: #374151; /* Cinza escuro para contraste */
   --color-background: #f9fafb; /* Branco suave, minimal */

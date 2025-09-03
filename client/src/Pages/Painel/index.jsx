@@ -8,35 +8,47 @@ const Painel = () => {
 
   return (
     <>
-      <main className="min-w-screen min-h-screen bg-slate-300">
-        <section className="max-w-2xl mx-auto p-6 text-center">
-          <h1 className="text-2xl font-bold mb-6">
-            Seja bem-vindo ao <span className="text-primary">Dev-Gastos</span>
-          </h1>
-          <p className="mb-8 text-gray-600">
-            Escolha uma das opções abaixo para começar:
-          </p>
-
-          <div className="flex flex-col items-center justify-center gap-2">
-            <Link
-              to="/novoGasto"
-              className="bg-primary text-white px-6 py-3 rounded-lg shadow hover:opacity-90 transition"
-            >
-              Cadastrar gasto
-            </Link>
-            <Link
-              to="/gastos"
-              className="bg-secondary text-white px-6 py-3 rounded-lg shadow hover:opacity-90 transition"
-            >
-              Listar gastos
-            </Link>
-            <Link
-              to="/dashboard"
-              className="bg-secondary text-white px-6 py-3 rounded-lg shadow hover:opacity-90 transition"
-            >
-              Dashboard
-            </Link>
+      <main className="min-w-screen min-h-screen bg-gradient-to-bl from-primary to-primary-light">
+        <section className="min-h-screen max-w-2xl mx-auto flex flex-col items-center justify-center gap-4">
+          <div>
+            <h1 className="text-3xl md:text-4xl text-center font-bold">
+              Seja bem-vindo ao{" "}
+              <span className="text-white animate-pulse">
+                Dev-Gastos
+              </span>
+              !
+            </h1>
+            <p className="text-center">
+              Escolha uma das opções abaixo para começar:
+            </p>
           </div>
+
+          <ul className="px-4 w-[95%] flex flex-col gap-3 justify-center items-center">
+            <li className="w-full">
+              <Link
+                to="/novoGasto"
+                className="block font-bold text-center bg-primary-dark text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
+              >
+                Cadastrar gasto
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="/gastos"
+                className="block font-bold text-center bg-primary-dark text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
+              >
+                Listar gastos
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="/dashboard"
+                className="block font-bold text-center bg-primary-dark text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
+              >
+                Dashboard
+              </Link>
+            </li>
+          </ul>
         </section>
       </main>
     </>
