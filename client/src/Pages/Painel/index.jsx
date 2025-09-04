@@ -34,6 +34,14 @@ const Painel = () => {
             </li>
             <li className="w-full">
               <Link
+                to="/novaReceita"
+                className="block font-bold text-center bg-primary-dark text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
+              >
+                Cadastrar Receita
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
                 to="/gastos"
                 className="block font-bold text-center bg-primary-dark text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
               >
