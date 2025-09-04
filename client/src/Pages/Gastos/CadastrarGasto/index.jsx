@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import Loader from "../../../Components/Loader";
 
 const CadastrarGasto = () => {
   // Estado para armazenar as categorias
   const [categorias, setCategorias] = useState([]);
+  // Estado para controlar loader
+  const [loader, setLoader] = useState(true);
   // Estados para inputs
   const [form, setForm] = useState({
     nome: "",
@@ -14,10 +17,16 @@ const CadastrarGasto = () => {
 
   // Função para pegar as categorias da API
   const pegarCategorias = async () => {
-    const url = `${import.meta.env.VITE_API_URL}/api/categorias`;
-    const request = await fetch(url);
-    const response = await request.json();
-    setCategorias(response.categorias);
+    try {
+      const url = `${import.meta.env.VITE_API_URL}/api/categorias`;
+      const request = await fetch(url);
+      const response = await request.json();
+      setCategorias(response.categorias);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoader(false);
+    }
   };
 
   // Função para cadastrar um gasto
@@ -77,18 +86,25 @@ const CadastrarGasto = () => {
     pegarCategorias();
   }, []);
 
+  if (loader) {
+    return <Loader />;
+  }
+
   return (
-    <form className="max-w-md mx-auto p-4 space-y-4" onSubmit={handleSubmit}>
+    <form
+      className="max-w-md mx-auto p-4 space-y-6 m-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
+      onSubmit={handleSubmit}
+    >
       {/* Nome */}
       <div>
         <label htmlFor="nome" className="block font-medium">
-          Nome
+          Nome:
         </label>
         <input
           id="nome"
           name="nome"
           type="text"
-          className="w-full border rounded p-2"
+          className="w-full border rounded p-2 focus:outline-primary-dark transition-all duration-300"
           placeholder="Ex: Cinema"
           required
           value={form.nome}
@@ -101,13 +117,13 @@ const CadastrarGasto = () => {
       {/* Descrição */}
       <div>
         <label htmlFor="descricao" className="block font-medium">
-          Descrição
+          Descrição:
         </label>
         <input
           id="descricao"
           name="descricao"
           type="text"
-          className="w-full border rounded p-2"
+          className="w-full border rounded p-2 focus:outline-primary-dark transition-all duration-300"
           placeholder="Ex: Saída ao cinema com amigos"
           value={form.descricao}
           onChange={(e) =>
@@ -119,14 +135,14 @@ const CadastrarGasto = () => {
       {/* Preço */}
       <div>
         <label htmlFor="preco" className="block font-medium">
-          Preço
+          Preço:
         </label>
         <input
           id="preco"
           name="preco"
           type="number"
           step="0.01"
-          className="w-full border rounded p-2"
+          className="w-full border rounded p-2 focus:outline-primary-dark transition-all duration-300"
           placeholder="Ex: 45.90"
           required
           value={form.preco}
@@ -139,12 +155,12 @@ const CadastrarGasto = () => {
       {/* Categoria */}
       <div>
         <label htmlFor="categoriaId" className="block font-medium">
-          Categoria
+          Categoria:
         </label>
         <select
           name="categoriaId"
           id="categoriaId"
-          className="w-full border rounded p-2"
+          className="w-full border rounded p-2 focus:outline-primary-dark transition-all duration-300"
           value={form.categoriaId}
           onChange={(e) =>
             setForm({ ...form, [e.target.name]: e.target.value })
@@ -167,7 +183,7 @@ const CadastrarGasto = () => {
       {/* Botão */}
       <button
         type="submit"
-        className="bg-primary text-white px-4 py-2 rounded hover:opacity-90"
+        className="bg-primary-dark text-white px-4 py-2 rounded cursor-pointer w-full hover:opacity-90 transition-all duration-300"
       >
         Salvar
       </button>
