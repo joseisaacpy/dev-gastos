@@ -15,7 +15,7 @@ const MainLayout = () => {
         {/* Header */}
         <header className="">
           {/* Nav */}
-          <nav className="min-w-screen min-h-[75px] shadow-2xl flex items-center justify-around bg-primary text-white">
+          <nav className="min-w-screen min-h-[75px] shadow-2xl flex items-center justify-around bg-primary-dark text-white">
             <Link to={"/"}>
               <h1 className="font-bold text-2xl transition-all duration-200 hover:text-warning cursor-pointer ">
                 DevGastos
@@ -77,7 +77,7 @@ const MainLayout = () => {
           <Outlet />
         </main>
         {/* Footer */}
-        <footer className="min-w-screen shadow-2xl p-2 text-center bg-primary text-white">
+        <footer className="min-w-screen shadow-2xl p-2 text-center bg-primary-dark text-white">
           <p className="font-bold">Dev-Gastos</p>
         </footer>
       </div>
