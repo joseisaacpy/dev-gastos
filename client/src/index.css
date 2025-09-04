@@ -26,3 +26,7 @@
   /* Fonts */
   --font-poppins-regular: "Poppins Regular";
 }
+
+body {
+  font-family: var(--font-poppins-regular);
+}

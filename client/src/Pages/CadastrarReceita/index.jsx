@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import Loader from "../../Components/Loader";
 
-const CadastrarGasto = () => {
+const cadastrarReceita = () => {
   // Estados para inputs
   const [form, setForm] = useState({
     nome: "",
     descricao: "",
-    preco: "",
+    valor: "",
     categoria: "",
   });
 
   // Função para cadastrar um gasto
-  const cadastrarGasto = async (gasto) => {
+  const cadastrarReceita = async (gasto) => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/api/gastos`;
+      const url = `${import.meta.env.VITE_API_URL}/api/receita`;
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -28,8 +28,8 @@ const CadastrarGasto = () => {
       // Se não foi bem sucedido, retorna um erro
       if (!response.ok) {
         // Mensagem de erro
-        toast.error(data.msg || "Erro ao cadastrar gasto.");
-        throw new Error(data.msg || "Erro ao cadastrar gasto");
+        toast.error(data.msg || "Erro ao cadastrar receita.");
+        throw new Error(data.msg || "Erro ao cadastrar receita");
       }
       // Mensagem de sucesso
       toast.success(data.msg || "Gasto cadastrado com sucesso!");
@@ -37,7 +37,7 @@ const CadastrarGasto = () => {
       setForm({
         nome: "",
         descricao: "",
-        preco: "",
+        valor: "",
         categoria: "",
       });
     } catch (error) {
@@ -49,37 +49,37 @@ const CadastrarGasto = () => {
     // Evita o recarregamento
     e.preventDefault();
     // Gasto para usar na função de cadastro
-    const gasto = {
+    const receita = {
       nome: form.nome,
       descricao: form.descricao,
-      preco: parseFloat(form.preco),
+      valor: parseFloat(form.valor),
       categoria: form.categoria,
     };
     try {
       // Chama a função de cadastro
-      await cadastrarGasto(gasto);
+      await cadastrarReceita(receita);
     } catch (error) {
-      console.error("Erro ao cadastrar gasto:", error);
+      console.error("Erro ao cadastrar receita:", error);
     }
   };
 
   // Atualiza nome e chama função de pegar categorias
   useEffect(() => {
-    document.title = "Cadastro de Gasto";
+    document.title = "Cadastro de Receita";
   }, []);
 
   return (
     <form
-      className="max-w-md mx-auto p-4 space-y-6 mt-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
+      className="max-w-md mx-auto p-4 space-y-6 m-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
       onSubmit={handleSubmit}
     >
       {/* Título */}
       <div className="">
-        <h1 className="text-2xl font-bold ">Cadastro de Gasto</h1>
+        <h1 className="text-2xl font-bold ">Cadastro de Receita</h1>
         <p>
           Quer cadastrar{" "}
-          <Link to={"/novaReceita"} className="font-bold">
-            receita?
+          <Link to={"/novoGasto"} className="font-bold">
+            gasto?
           </Link>
         </p>
       </div>
@@ -128,13 +128,13 @@ const CadastrarGasto = () => {
         </label>
         <input
           id="preco"
-          name="preco"
+          name="valor"
           type="number"
           step="0.01"
           className="w-full border rounded p-2 focus:outline-primary-dark transition-all duration-300"
           placeholder="Ex: 45.90"
           required
-          value={form.preco}
+          value={form.valor}
           onChange={(e) =>
             setForm({ ...form, [e.target.name]: e.target.value })
           }
@@ -158,13 +158,6 @@ const CadastrarGasto = () => {
           <option value="" disabled>
             Selecione:
           </option>
-          <option value="Alimentacao">Alimentação</option>
-          <option value="Moradia">Moradia</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Saude">Saúde</option>
-          <option value="Educacao">Educação</option>
-          <option value="Lazer">Lazer</option>
-          <option value="Roupas e Acessorios">Roupas e Acessórios</option>
           <option value="Outros">Outros</option>
         </select>
       </div>
@@ -180,4 +173,4 @@ const CadastrarGasto = () => {
   );
 };
 
-export default CadastrarGasto;
+export default cadastrarReceita;

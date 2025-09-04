@@ -5,6 +5,7 @@ import MainLayout from "./Components/MainLayout";
 // Importa as páginas
 import Painel from "./Pages/Painel";
 import CadastrarGasto from "./Pages/CadastrarGasto";
+import CadastrarReceita from "./Pages/CadastrarReceita";
 import ListarGastos from "./Pages/Listar";
 import Dashboard from "./Pages/Dashboard";
 
@@ -17,8 +18,10 @@ const AllRoutes = () => {
         <Route path="/" element={<Painel />} />
         {/* Rota com o layout */}
         <Route element={<MainLayout />}>
-          {/* Rota de cadastro */}
+          {/* Rota de cadastro de gasto*/}
           <Route path="/novoGasto" element={<CadastrarGasto />} />
+          {/* Rota de cadastro de receita */}
+          <Route path="/novaReceita" element={<CadastrarReceita />} />
           {/* Rota para listar gastos */}
           <Route path="/gastos" element={<ListarGastos />} />
           {/* Rota para dash */}
