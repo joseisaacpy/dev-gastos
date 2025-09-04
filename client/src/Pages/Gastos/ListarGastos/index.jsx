@@ -111,7 +111,7 @@ const ListarGastos = () => {
                       </td>
                       <td className="border-2 p-2">{precoGastoFormatado}</td>
                       <td className="border-2 p-2">{dataFormatada}</td>
-                      <td className="border-2 p-2"></td>
+                      <td className="border-2 p-2">{gasto.categoria}</td>
                       <td className="border-2 p-2">
                         <div className="flex items-center justify-center gap-2">
                           <button

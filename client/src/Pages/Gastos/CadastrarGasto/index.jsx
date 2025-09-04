@@ -3,31 +3,15 @@ import { toast } from "react-toastify";
 import Loader from "../../../Components/Loader";
 
 const CadastrarGasto = () => {
-  // Estado para armazenar as categorias
-  const [categorias, setCategorias] = useState([]);
   // Estado para controlar loader
-  const [loader, setLoader] = useState(true);
+  // const [loader, setLoader] = useState(true);
   // Estados para inputs
   const [form, setForm] = useState({
     nome: "",
     descricao: "",
     preco: "",
-    categoriaId: "",
+    categoria: "",
   });
-
-  // Função para pegar as categorias da API
-  const pegarCategorias = async () => {
-    try {
-      const url = `${import.meta.env.VITE_API_URL}/api/categorias`;
-      const request = await fetch(url);
-      const response = await request.json();
-      setCategorias(response.categorias);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoader(false);
-    }
-  };
 
   // Função para cadastrar um gasto
   const cadastrarGasto = async (gasto) => {
@@ -55,7 +39,7 @@ const CadastrarGasto = () => {
         nome: "",
         descricao: "",
         preco: "",
-        categoriaId: "",
+        categoria: "",
       });
     } catch (error) {
       console.error("Erro ao cadastrar gasto: ", error);
@@ -70,7 +54,7 @@ const CadastrarGasto = () => {
       nome: form.nome,
       descricao: form.descricao,
       preco: parseFloat(form.preco),
-      categoriaId: form.categoriaId,
+      categoria: form.categoria,
     };
     try {
       // Chama a função de cadastro
@@ -83,12 +67,7 @@ const CadastrarGasto = () => {
   // Atualiza nome e chama função de pegar categorias
   useEffect(() => {
     document.title = "Cadastro de Gasto";
-    pegarCategorias();
   }, []);
-
-  if (loader) {
-    return <Loader />;
-  }
 
   return (
     <form
@@ -154,14 +133,14 @@ const CadastrarGasto = () => {
 
       {/* Categoria */}
       <div>
-        <label htmlFor="categoriaId" className="block font-medium">
+        <label htmlFor="categoria" className="block font-medium">
           Categoria:
         </label>
         <select
-          name="categoriaId"
-          id="categoriaId"
+          name="categoria"
+          id="categoria"
           className="w-full border rounded p-2 focus:outline-primary-dark transition-all duration-300"
-          value={form.categoriaId}
+          value={form.categoria}
           onChange={(e) =>
             setForm({ ...form, [e.target.name]: e.target.value })
           }
@@ -169,14 +148,14 @@ const CadastrarGasto = () => {
           <option value="" disabled>
             Selecione:
           </option>
-
-          {categorias.map((cat) => {
-            return (
-              <option key={cat.id} value={cat.id}>
-                {cat.nome}
-              </option>
-            );
-          })}
+          <option value="Alimentacao">Alimentação</option>
+          <option value="Moradia">Moradia</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saude">Saúde</option>
+          <option value="Educacao">Educação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Roupas e Acessorios">Roupas e Acessórios</option>
+          <option value="Outros">Outros</option>
         </select>
       </div>
 

@@ -11,9 +11,9 @@ const router = Router();
 router.post("/", async (req, res) => {
   try {
     // Gasto vem do body da req
-    const { nome, descricao, preco, categoriaId } = req.body;
+    const { nome, descricao, preco, categoria } = req.body;
     // Validação de dados obrigatórios
-    if (!nome || !preco || !categoriaId) {
+    if (!nome || !preco || !categoria) {
       return res.status(400).json({
         msg: "Nome, Preço e Categoria são obrigatórios para cadastrar um gasto.",
       });
@@ -24,11 +24,7 @@ router.post("/", async (req, res) => {
         nome,
         descricao,
         preco,
-
-        categoriaId,
-      },
-      include: {
-        categoria: true,
+        categoria,
       },
     });
     // Retorna msg de criação
@@ -44,11 +40,7 @@ router.post("/", async (req, res) => {
 // GET todos os gastos
 router.get("/", async (req, res) => {
   try {
-    const gastos = await prisma.gasto.findMany({
-      include: {
-        categoria: true,
-      },
-    });
+    const gastos = await prisma.gasto.findMany();
     return res.status(200).json(gastos);
   } catch (error) {
     console.error(error);
