@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import Loader from "../../../Components/Loader";
+import Loader from "../../Components/Loader";
 
 const CadastrarGasto = () => {
-  // Estado para controlar loader
-  // const [loader, setLoader] = useState(true);
   // Estados para inputs
   const [form, setForm] = useState({
     nome: "",
@@ -74,6 +72,8 @@ const CadastrarGasto = () => {
       className="max-w-md mx-auto p-4 space-y-6 m-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
       onSubmit={handleSubmit}
     >
+      {/* Título */}
+      <h1 className="text-2xl font-bold text-left">Cadastro de Gasto</h1>
       {/* Nome */}
       <div>
         <label htmlFor="nome" className="block font-medium">

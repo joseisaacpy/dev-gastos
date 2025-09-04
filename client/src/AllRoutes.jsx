@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./Components/MainLayout";
 // Importa as páginas
 import Painel from "./Pages/Painel";
-import CadastrarGasto from "./Pages/Gastos/CadastrarGasto";
-import ListarGastos from "./Pages/Gastos/ListarGastos";
+import CadastrarGasto from "./Pages/CadastrarGasto";
+import ListarGastos from "./Pages/Listar";
 import Dashboard from "./Pages/Dashboard";
 
 const AllRoutes = () => {

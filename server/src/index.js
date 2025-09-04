@@ -2,7 +2,6 @@
 import express from "express";
 import cors from "cors";
 import gastosRoutes from "./routes/gastos.routes.js";
-import categoriasRoutes from "./routes/categorias.routes.js";
 
 // Contantes
 const app = express();
@@ -13,7 +12,6 @@ app.use(express.json()); // Aceitar JSON
 app.use(express.urlencoded({ extended: true })); // Aceitar dados do corpo da requisição
 app.use(cors());
 app.use("/api/gastos", gastosRoutes); // Faz com que todas as rotas começem com /api/gastos
-app.use("/api/categorias", categoriasRoutes); // Faz com que todas as rotas começem com /api/gastos
 
 // Rotas
 app.get("/", (req, res) => {

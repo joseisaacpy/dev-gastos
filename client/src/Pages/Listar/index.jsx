@@ -1,5 +1,5 @@
 // Importa o loader
-import Loader from "../../../Components/Loader";
+import Loader from "../../Components/Loader";
 // Importa icons
 import { FaTrash } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
