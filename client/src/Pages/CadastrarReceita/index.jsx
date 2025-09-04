@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import Loader from "../../Components/Loader";
 
-const cadastrarReceita = () => {
+const CadastrarReceita = () => {
   // Estados para inputs
   const [form, setForm] = useState({
     nome: "",
@@ -13,13 +13,13 @@ const cadastrarReceita = () => {
   });
 
   // Função para cadastrar um gasto
-  const cadastrarReceita = async (gasto) => {
+  const cadastrarReceita = async (receita) => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/api/receita`;
+      const url = `${import.meta.env.VITE_API_URL}/api/receitas`;
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(gasto),
+        body: JSON.stringify(receita),
       });
 
       // Pega a resposta do back
@@ -41,7 +41,7 @@ const cadastrarReceita = () => {
         categoria: "",
       });
     } catch (error) {
-      console.error("Erro ao cadastrar gasto: ", error);
+      console.error("Erro ao cadastrar receita: ", error);
     }
   };
   // Função para lidar com o envio do form
@@ -64,10 +64,10 @@ const cadastrarReceita = () => {
   };
 
   // Atualiza nome e chama função de pegar categorias
+
   useEffect(() => {
     document.title = "Cadastro de Receita";
-  }, []);
-
+  });
   return (
     <form
       className="max-w-md mx-auto p-4 space-y-6 m-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
@@ -123,11 +123,11 @@ const cadastrarReceita = () => {
 
       {/* Preço */}
       <div>
-        <label htmlFor="preco" className="block font-medium">
+        <label htmlFor="valor" className="block font-medium">
           Preço:
         </label>
         <input
-          id="preco"
+          id="valor"
           name="valor"
           type="number"
           step="0.01"
@@ -158,6 +158,7 @@ const cadastrarReceita = () => {
           <option value="" disabled>
             Selecione:
           </option>
+          <option value="Projetos">Projetos/Freelas</option>
           <option value="Outros">Outros</option>
         </select>
       </div>
@@ -173,4 +174,4 @@ const cadastrarReceita = () => {
   );
 };
 
-export default cadastrarReceita;
+export default CadastrarReceita;
