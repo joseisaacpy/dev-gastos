@@ -15,7 +15,7 @@ const ListarGastos = () => {
   const [loading, setLoading] = useState(true);
 
   // Função para consumir API de gastos
-  const pegarGastos = async () => {
+  const pegarDados = async () => {
     try {
       const url = `${import.meta.env.VITE_API_URL}/api/gastos`;
       const request = await fetch(url);
@@ -42,7 +42,7 @@ const ListarGastos = () => {
       toast.success(data.msg);
       console.log(data.msg);
       // Chama função para atualizar os gastos
-      pegarGastos();
+      pegarDados();
     } catch (error) {
       console.log(error);
       toast.error("Erro ao deletar gasto");
@@ -52,7 +52,7 @@ const ListarGastos = () => {
   //   useEffect para mudar titulo e chamar função
   useEffect(() => {
     document.title = "Seus Gastos";
-    pegarGastos();
+    pegarDados();
   }, []);
 
   if (loading) {

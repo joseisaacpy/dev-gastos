@@ -50,6 +50,14 @@ const Painel = () => {
             </li>
             <li className="w-full">
               <Link
+                to="/receitas"
+                className="block font-bold text-center bg-primary-dark text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
+              >
+                Listar receitas
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
                 to="/dashboard"
                 className="block font-bold text-center bg-primary-dark text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
               >
