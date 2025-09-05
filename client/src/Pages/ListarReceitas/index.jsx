@@ -8,50 +8,50 @@ import { toast } from "react-toastify";
 
 // Importa hooks
 import { useState, useEffect } from "react";
-const ListarGastos = () => {
-  // Estado para armazenar gastos
-  const [gastos, setGastos] = useState([]);
+const ListarReceitas = () => {
+  // Estado para armazenar receitas
+  const [receitas, setreceitas] = useState([]);
   // Estado para controlar o Loader
   const [loading, setLoading] = useState(true);
 
-  // Função para consumir API de gastos
+  // Função para consumir API de receitas
   const pegarDados = async () => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/api/gastos`;
+      const url = `${import.meta.env.VITE_API_URL}/api/receitas`;
       const request = await fetch(url);
       const response = await request.json();
-      setGastos(response);
+      setreceitas(response);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
-  // Função para deletar um gasto
-  const deletarGasto = async (id) => {
+  // Função para deletar um receita
+  const deletarReceita = async (id) => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/api/gastos/${id}`;
+      const url = `${import.meta.env.VITE_API_URL}/api/receitas/${id}`;
       console.log(id);
       const response = await fetch(url, {
         method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error("Erro ao deletar gasto");
+        throw new Error("Erro ao deletar receita");
       }
       const data = await response.json();
       toast.success(data.msg);
       console.log(data.msg);
-      // Chama função para atualizar os gastos
+      // Chama função para atualizar os receitas
       pegarDados();
     } catch (error) {
       console.log(error);
-      toast.error("Erro ao deletar gasto");
+      toast.error("Erro ao deletar receita");
     }
   };
 
   //   useEffect para mudar titulo e chamar função
   useEffect(() => {
-    document.title = "Seus Gastos";
+    document.title = "Suas receitas";
     pegarDados();
   }, []);
 
@@ -77,50 +77,50 @@ const ListarGastos = () => {
             </thead>
             {/* Corpo da tabela */}
             <tbody>
-              {/* Se gastos for 0 */}
-              {gastos.length === 0 ? (
+              {/* Se receitas for 0 */}
+              {receitas.length === 0 ? (
                 <tr>
                   <td
                     className="border-2 p-2 text-center font-bold"
                     colSpan={6}
                   >
-                    Nenhum gasto cadastrado
+                    Nenhuma receita cadastrada
                   </td>
                 </tr>
               ) : (
-                gastos.map((gasto) => {
+                receitas.map((receita) => {
                   {
                     /* Preço formatado */
                   }
-                  const precoGastoFormatado = new Intl.NumberFormat("pt-BR", {
+                  const precoReceitaFormatado = new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
-                  }).format(gasto.preco);
+                  }).format(receita.valor);
                   /* Data formatada */
-                  const dataFormatada = new Date(gasto.data).toLocaleString(
+                  const dataFormatada = new Date(receita.data).toLocaleString(
                     "pt-BR"
                   );
                   return (
                     <tr
-                      key={gasto.id}
+                      key={receita.id}
                       className="odd:bg-slate-200 even:bg-slate-300 border-2"
                     >
-                      <td className="border-2 p-2">{gasto.nome}</td>
+                      <td className="border-2 p-2">{receita.nome}</td>
                       <td className="border-2 p-2">
-                        {gasto.descricao || "Sem descrição"}
+                        {receita.descricao || "Sem descrição"}
                       </td>
-                      <td className="border-2 p-2">{precoGastoFormatado}</td>
+                      <td className="border-2 p-2">{precoReceitaFormatado}</td>
                       <td className="border-2 p-2">{dataFormatada}</td>
-                      <td className="border-2 p-2">{gasto.categoria}</td>
+                      <td className="border-2 p-2">{receita.categoria}</td>
                       <td className="border-2 p-2">
                         <div className="flex items-center justify-center gap-2">
                           <button
-                            title="Deletar gasto"
-                            onClick={() => deletarGasto(gasto.id)}
+                            title="Deletar receita"
+                            onClick={() => deletarReceita(receita.id)}
                           >
                             <FaTrash className="text-red-600 hover:text-red-900 transition-all duration-300 cursor-pointer" />
                           </button>
-                          <button title="Editar gasto">
+                          <button title="Editar receita">
                             <FaEdit className="text-blue-600 hover:text-blue-900 transition-all duration-300 cursor-pointer" />
                           </button>
                         </div>
@@ -134,7 +134,7 @@ const ListarGastos = () => {
                   colSpan={6}
                   className="p-1 bg-primary-dark text-white border-2 border-black font-bold text-center"
                 >
-                  {gastos.length} Gastos
+                  {receitas.length} Receitas
                 </td>
               </tr>
             </tbody>
@@ -145,4 +145,4 @@ const ListarGastos = () => {
   );
 };
 
-export default ListarGastos;
+export default ListarReceitas;

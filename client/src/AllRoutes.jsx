@@ -8,7 +8,7 @@ import CadastrarGasto from "./Pages/CadastrarGasto";
 import CadastrarReceita from "./Pages/CadastrarReceita";
 import NotFound from "./Pages/NotFound";
 import ListarGastos from "./Pages/ListarGastos";
-// import ListarReceitas from "./Pages/ListarReceitas";
+import ListarReceitas from "./Pages/ListarReceitas";
 import Dashboard from "./Pages/Dashboard";
 
 const AllRoutes = () => {
@@ -27,7 +27,7 @@ const AllRoutes = () => {
           {/* Rota para listar gastos */}
           <Route path="/gastos" element={<ListarGastos />} />
           {/* Rota para listar receitas */}
-          {/* <Route path="/receitas" element={<ListarReceitas />} /> */}
+          <Route path="/receitas" element={<ListarReceitas />} />
           {/* Rota para dash */}
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
