@@ -39,5 +39,17 @@ router.get("/", async (req, res) => {
     return res.status(500).json({ msg: "Erro ao buscar receitas" });
   }
 });
+// DELETE
+router.delete("/:id", async (req, res) => {
+  try {
+    // Pega o id
+    const { id } = req.params;
+    await prisma.receita.delete({ where: { id: id } });
+    return res.json({ msg: "Receitas deletada com sucesso" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ msg: "Erro ao deletar receita" });
+  }
+});
 
 export default router;
