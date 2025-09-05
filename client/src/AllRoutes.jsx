@@ -6,7 +6,9 @@ import MainLayout from "./Components/MainLayout";
 import Painel from "./Pages/Painel";
 import CadastrarGasto from "./Pages/CadastrarGasto";
 import CadastrarReceita from "./Pages/CadastrarReceita";
-import ListarGastos from "./Pages/Listar";
+import NotFound from "./Pages/NotFound";
+import ListarGastos from "./Pages/ListarGastos";
+// import ListarReceitas from "./Pages/ListarReceitas";
 import Dashboard from "./Pages/Dashboard";
 
 const AllRoutes = () => {
@@ -24,11 +26,15 @@ const AllRoutes = () => {
           <Route path="/novaReceita" element={<CadastrarReceita />} />
           {/* Rota para listar gastos */}
           <Route path="/gastos" element={<ListarGastos />} />
+          {/* Rota para listar receitas */}
+          {/* <Route path="/receitas" element={<ListarReceitas />} /> */}
           {/* Rota para dash */}
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         {/* Rota de login */}
         {/* <Route></Route> */}
+        {/* Rota não encontrada */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
