@@ -54,7 +54,6 @@ const Dashboard = () => {
         <div className=" grid grid-cols-1 md:grid-cols-3 gap-3">
           <Card nomeCartao={"Quantidade de Gastos"} valor={quantidadeGastos} />
           <Card nomeCartao={"Valor total gasto"} valor={totalGastado} />
-          <Card nomeCartao={"Oi"} valor={"oi"} />
         </div>
       </section>
     </>
