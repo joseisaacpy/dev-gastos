@@ -9,6 +9,8 @@ import { useState } from "react";
 const MainLayout = () => {
   // Estado para controlar se pode exibir o menu
   const [menu, setMenu] = useState(false);
+  // Estado para controlar se o dropdown pode aparecer
+  const [showDrop, setShowDrop] = useState(false);
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -23,10 +25,37 @@ const MainLayout = () => {
             </Link>
             {/* Menu Desktop */}
             <ul className="hidden sm:flex  gap-4">
-              <li>
-                <Link to={"/novoGasto"} title="Cadastrar">
+              <li className="relative">
+                <button onClick={() => setShowDrop(!showDrop)}>
                   <FaPlus className="transition-all duration-200 hover:text-warning cursor-pointer" />
-                </Link>
+                </button>
+                {/* Dropdown */}
+                <div
+                  className={`absolute right-0 w-30 bg-primary shadow-lg rounded-md  transition-all duration-300 ${
+                    showDrop
+                      ? "flex flex-col opacity-100"
+                      : "opacity-0 pointer-events-none"
+                  }`}
+                >
+                  <Link
+                    onClick={() => {
+                      setShowDrop(!showDrop);
+                    }}
+                    to={"/novoGasto"}
+                    className="block text-center rounded-md px-4 py-2 transition-all duration-300 hover:bg-gray-100 hover:text-warning"
+                  >
+                    + Gasto
+                  </Link>
+                  <Link
+                    onClick={() => {
+                      setShowDrop(!showDrop);
+                    }}
+                    to={"/novaReceita"}
+                    className="block text-center rounded-md px-4 py-2 transition-all duration-300 hover:bg-gray-100 hover:text-warning"
+                  >
+                    + Receita
+                  </Link>
+                </div>
               </li>
               <li>
                 <Link to={"/gastos"} title="Listar">
