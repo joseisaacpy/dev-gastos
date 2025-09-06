@@ -11,6 +11,8 @@ const CadastrarGasto = () => {
     preco: "",
     categoria: "",
   });
+  // Estado para controlar msg do button
+  const [isSalvando, setIsSalvando] = useState(false);
 
   // Função para cadastrar um gasto
   const cadastrarGasto = async (gasto) => {
@@ -57,9 +59,12 @@ const CadastrarGasto = () => {
     };
     try {
       // Chama a função de cadastro
+      setIsSalvando(true);
       await cadastrarGasto(gasto);
     } catch (error) {
       console.error("Erro ao cadastrar gasto:", error);
+    } finally {
+      setIsSalvando(false);
     }
   };
 
@@ -70,15 +75,15 @@ const CadastrarGasto = () => {
 
   return (
     <form
-      className="max-w-md mx-auto p-4 space-y-6 mt-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
+      className="max-w-md mx-auto px-4 py-2 space-y-6 mt-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
       onSubmit={handleSubmit}
     >
       {/* Título */}
       <div className="">
         <h1 className="text-2xl font-bold ">Cadastro de Gasto</h1>
-        <p>
+        <p className="text-[12px] text-left">
           Quer cadastrar{" "}
-          <Link to={"/novaReceita"} className="font-bold">
+          <Link to={"/novaReceita"} className="font-bold underline">
             receita?
           </Link>
         </p>
@@ -172,9 +177,9 @@ const CadastrarGasto = () => {
       {/* Botão */}
       <button
         type="submit"
-        className="bg-primary-dark text-white px-4 py-2 rounded cursor-pointer w-full hover:opacity-90 transition-all duration-300"
+        className="bg-primary-dark text-white px-4 py-2 rounded cursor-pointer w-full hover:opacity-90 transition-all duration-300 focus:outline-primary-dark focus:opacity-90"
       >
-        Salvar
+        {isSalvando ? "Salvando..." : "Salvar"}
       </button>
     </form>
   );

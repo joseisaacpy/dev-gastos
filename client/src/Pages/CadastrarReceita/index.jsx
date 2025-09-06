@@ -11,6 +11,8 @@ const CadastrarReceita = () => {
     valor: "",
     categoria: "",
   });
+  // Estado para controlar mensagem do button
+  const [isSalvando, setIsSalvando] = useState(false);
 
   // Função para cadastrar um gasto
   const cadastrarReceita = async (receita) => {
@@ -56,10 +58,15 @@ const CadastrarReceita = () => {
       categoria: form.categoria,
     };
     try {
+      // Vai começar a salvar
+      setIsSalvando(true);
       // Chama a função de cadastro
       await cadastrarReceita(receita);
     } catch (error) {
       console.error("Erro ao cadastrar receita:", error);
+    } finally {
+      // Volta pro estado normal
+      setIsSalvando(false);
     }
   };
 
@@ -70,15 +77,15 @@ const CadastrarReceita = () => {
   });
   return (
     <form
-      className="max-w-md mx-auto p-4 space-y-6 m-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
+      className="max-w-md mx-auto px-4 py-2 space-y-6 m-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
       onSubmit={handleSubmit}
     >
       {/* Título */}
       <div className="">
-        <h1 className="text-2xl font-bold ">Cadastro de Receita</h1>
-        <p>
+        <h1 className="text-2xl font-bold">Cadastro de Receita</h1>
+        <p className="text-[12px] text-left">
           Quer cadastrar{" "}
-          <Link to={"/novoGasto"} className="font-bold">
+          <Link to={"/novoGasto"} className="font-bold underline">
             gasto?
           </Link>
         </p>
@@ -159,6 +166,9 @@ const CadastrarReceita = () => {
             Selecione:
           </option>
           <option value="Projetos">Projetos/Freelas</option>
+          <option value="Salario">Salário</option>
+          <option value="Presentes">Presentes/Doações</option>
+
           <option value="Outros">Outros</option>
         </select>
       </div>
@@ -166,9 +176,9 @@ const CadastrarReceita = () => {
       {/* Botão */}
       <button
         type="submit"
-        className="bg-primary-dark text-white px-4 py-2 rounded cursor-pointer w-full hover:opacity-90 transition-all duration-300"
+        className="bg-primary-dark text-white px-4 py-2 rounded cursor-pointer w-full hover:opacity-90 transition-all duration-300 focus:outline-primary-dark focus:opacity-90"
       >
-        Salvar
+        {isSalvando ? "Salvando..." : "Salvar"}
       </button>
     </form>
   );
