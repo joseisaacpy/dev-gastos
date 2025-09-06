@@ -9,10 +9,11 @@ const Dashboard = () => {
   // Estado para controlar loader
   const [loader, setLoader] = useState(true);
 
-  // Estado para armazenar os dados da api
+  // Estados para armazenar os dados da api
   const [gastos, setGastos] = useState([]);
+  const [receitas, setReceitas] = useState([]);
 
-  // Valor total
+  // Valor de totais
   const totalGastado = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -21,16 +22,30 @@ const Dashboard = () => {
       return acumulador + gasto.preco;
     }, 0)
   );
-  //   Quantidade
+  const totalRecebido = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(
+    receitas.reduce((acumulador, receita) => {
+      return acumulador + receita.valor;
+    }, 0)
+  );
+  //   Quantidades
   const quantidadeGastos = gastos.length;
+  const quantidadeReceitas = receitas.length;
 
   // Função de consumir API
   const consumirApi = async () => {
     try {
-      const url = `${import.meta.env.VITE_API_URL}/api/gastos`;
-      const response = await fetch(url);
-      const data = await response.json();
-      setGastos(data);
+      const baseURL = import.meta.env.VITE_API_URL;
+      const [resGastos, resReceitas] = await Promise.all([
+        fetch(`${baseURL}/api/gastos`),
+        fetch(`${baseURL}/api/receitas`),
+      ]);
+      const dataGasto = await resGastos.json();
+      const dataReceita = await resReceitas.json();
+      setGastos(dataGasto);
+      setReceitas(dataReceita);
     } catch (error) {
       console.log(error);
     } finally {
@@ -53,7 +68,12 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold mb-3">Seu Dashboard</h1>
         <div className=" grid grid-cols-1 md:grid-cols-3 gap-3">
           <Card nomeCartao={"Quantidade de Gastos"} valor={quantidadeGastos} />
+          <Card
+            nomeCartao={"Quantidade de Receitas"}
+            valor={quantidadeReceitas}
+          />
           <Card nomeCartao={"Valor total gasto"} valor={totalGastado} />
+          <Card nomeCartao={"Valor total recebido"} valor={totalRecebido} />
         </div>
       </section>
     </>
