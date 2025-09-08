@@ -67,13 +67,38 @@ const Dashboard = () => {
       <section className="px-4 py-2">
         <h1 className="text-3xl font-bold mb-3">Seu Dashboard</h1>
         <div className=" grid grid-cols-1 md:grid-cols-3 gap-3">
-          <Card nomeCartao={"Quantidade de Gastos"} valor={quantidadeGastos} />
           <Card
+            imagemUrl={
+              "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
+            }
+            nomeCartao={"Quantidade de Gastos"}
+            valor={quantidadeGastos}
+            tipo={"gasto"}
+          />
+          <Card
+            imagemUrl={
+              "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
+            }
             nomeCartao={"Quantidade de Receitas"}
             valor={quantidadeReceitas}
+            tipo={"receita"}
           />
-          <Card nomeCartao={"Valor total gasto"} valor={totalGastado} />
-          <Card nomeCartao={"Valor total recebido"} valor={totalRecebido} />
+          <Card
+            imagemUrl={
+              "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
+            }
+            nomeCartao={"Valor total gasto"}
+            valor={totalGastado}
+            tipo={"gasto"}
+          />
+          <Card
+            imagemUrl={
+              "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
+            }
+            nomeCartao={"Valor total recebido"}
+            valor={totalRecebido}
+            tipo={"receita"}
+          />
         </div>
       </section>
     </>
