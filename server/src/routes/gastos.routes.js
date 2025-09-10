@@ -11,11 +11,11 @@ const router = Router();
 router.post("/", async (req, res) => {
   try {
     // Gasto vem do body da req
-    const { nome, descricao, preco, categoria } = req.body;
+    const { nome, descricao, data, preco, categoria } = req.body;
     // Validação de dados obrigatórios
-    if (!nome || !preco || !categoria) {
+    if (!nome || !preco || !data || !categoria) {
       return res.status(400).json({
-        msg: "Nome, Preço e Categoria são obrigatórios para cadastrar um gasto.",
+        msg: "Nome, Preço, Data e Categoria são obrigatórios para cadastrar um gasto.",
       });
     }
     // Cria o novo gasto com os dados
@@ -23,6 +23,7 @@ router.post("/", async (req, res) => {
       data: {
         nome,
         descricao,
+        data: new Date(data), // faz a conversão
         preco,
         categoria,
       },

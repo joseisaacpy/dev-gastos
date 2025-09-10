@@ -9,6 +9,7 @@ const CadastrarGasto = () => {
     nome: "",
     descricao: "",
     preco: "",
+    data: new Date().toISOString().split("T")[0],
     categoria: "",
   });
   // Estado para controlar msg do button
@@ -40,6 +41,7 @@ const CadastrarGasto = () => {
         nome: "",
         descricao: "",
         preco: "",
+        data: new Date().toISOString().split("T")[0],
         categoria: "",
       });
     } catch (error) {
@@ -55,12 +57,14 @@ const CadastrarGasto = () => {
       nome: form.nome,
       descricao: form.descricao,
       preco: parseFloat(form.preco),
+      data: form.data,
       categoria: form.categoria,
     };
     try {
       // Chama a função de cadastro
       setIsSalvando(true);
       await cadastrarGasto(gasto);
+      console.log(gasto);
     } catch (error) {
       console.error("Erro ao cadastrar gasto:", error);
     } finally {
@@ -140,6 +144,22 @@ const CadastrarGasto = () => {
           placeholder="Ex: 45.90"
           required
           value={form.preco}
+          onChange={(e) =>
+            setForm({ ...form, [e.target.name]: e.target.value })
+          }
+        />
+      </div>
+
+      {/* Data */}
+      <div>
+        <label htmlFor="data"></label>
+        <input
+          type="date"
+          name="data"
+          id="data"
+          className="w-full border rounded p-2 focus:outline-primary-dark transition-all duration-300"
+          required
+          value={form.data}
           onChange={(e) =>
             setForm({ ...form, [e.target.name]: e.target.value })
           }
