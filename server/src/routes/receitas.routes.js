@@ -10,15 +10,15 @@ const router = Router();
 // POST
 router.post("/", async (req, res) => {
   try {
-    const { nome, descricao, valor, categoria } = req.body;
+    const { nome, descricao, valor, data, categoria } = req.body;
 
-    if (!nome || !valor || !categoria) {
+    if (!nome || !valor || !data || !categoria) {
       return res.status(400).json({
-        msg: "Nome, Valor e Categoria são obrigatórios para cadastrar uma receita.",
+        msg: "Nome, Valor, Data e Categoria são obrigatórios para cadastrar uma receita.",
       });
     }
     const novaReceita = await prisma.receita.create({
-      data: { nome, descricao, valor, categoria },
+      data: { nome, descricao, valor, data: new Date(data), categoria },
     });
     // Retorna msg de criação
     return res

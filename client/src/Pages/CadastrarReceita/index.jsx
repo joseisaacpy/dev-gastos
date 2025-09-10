@@ -9,6 +9,7 @@ const CadastrarReceita = () => {
     nome: "",
     descricao: "",
     valor: "",
+    data: new Date().toISOString().split("T")[0],
     categoria: "",
   });
   // Estado para controlar mensagem do button
@@ -40,6 +41,7 @@ const CadastrarReceita = () => {
         nome: "",
         descricao: "",
         valor: "",
+        data: new Date().toISOString().split("T")[0],
         categoria: "",
       });
     } catch (error) {
@@ -55,6 +57,7 @@ const CadastrarReceita = () => {
       nome: form.nome,
       descricao: form.descricao,
       valor: parseFloat(form.valor),
+      data: form.data,
       categoria: form.categoria,
     };
     try {
@@ -142,6 +145,23 @@ const CadastrarReceita = () => {
           placeholder="Ex: 45.90"
           required
           value={form.valor}
+          onChange={(e) =>
+            setForm({ ...form, [e.target.name]: e.target.value })
+          }
+        />
+      </div>
+      {/* Data */}
+      <div>
+        <label htmlFor="data" className="block font-medium">
+          Data:
+        </label>
+        <input
+          id="data"
+          name="data"
+          type="date"
+          className="w-full border rounded p-2 focus:outline-primary-dark transition-all duration-300"
+          required
+          value={form.data}
           onChange={(e) =>
             setForm({ ...form, [e.target.name]: e.target.value })
           }
