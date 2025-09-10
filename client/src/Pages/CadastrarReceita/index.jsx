@@ -80,7 +80,7 @@ const CadastrarReceita = () => {
   });
   return (
     <form
-      className="max-w-md mx-auto px-4 py-2 space-y-6 m-4 bg-slate-100 shadow-md border border-slate-600 rounded-2xl"
+      className="w-full max-w-md mx-auto mt-2 flex flex-col gap-3 p-2 bg-slate-100 shadow-md border border-slate-600 rounded-md"
       onSubmit={handleSubmit}
     >
       {/* Título */}
