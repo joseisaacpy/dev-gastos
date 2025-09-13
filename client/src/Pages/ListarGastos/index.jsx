@@ -61,12 +61,12 @@ const ListarGastos = () => {
   return (
     <>
       <section className="flex items-center justify-center ">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto mt-3 sm:mt-5 md:mt-8 rounded-md border shadow-md shadow-primary-dark">
           {/* Tabela */}
           <table className="min-w-full">
             {/* Cabeçalho da tabela */}
             <thead className="bg-primary-dark text-white font-bold">
-              <tr>
+              <tr className="">
                 <td className="border-2 border-black p-2 ">Nome</td>
                 <td className="border-2 border-black p-2">Descrição</td>
                 <td className="border-2 border-black p-2">Preço</td>
@@ -103,7 +103,7 @@ const ListarGastos = () => {
                   return (
                     <tr
                       key={gasto.id}
-                      className="odd:bg-slate-200 even:bg-slate-300 border-2"
+                      className="odd:bg-slate-200 even:bg-slate-300 border-2 hover:bg-slate-50 transition-all duration-300"
                     >
                       <td className="border-2 p-2">{gasto.nome}</td>
                       <td className="border-2 p-2">
