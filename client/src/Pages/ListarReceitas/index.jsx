@@ -65,7 +65,7 @@ const ListarReceitas = () => {
           {/* Tabela */}
           <table className="min-w-full">
             {/* Cabeçalho da tabela */}
-            <thead className="bg-blue-600 text-white font-bold">
+            <thead className="bg-primary-dark text-white font-bold">
               <tr>
                 <td className="border-2 border-black p-2 ">Nome</td>
                 <td className="border-2 border-black p-2">Descrição</td>
