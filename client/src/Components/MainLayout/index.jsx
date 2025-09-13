@@ -9,22 +9,26 @@ import { useState } from "react";
 const MainLayout = () => {
   // Estado para controlar se pode exibir o menu
   const [menu, setMenu] = useState(false);
+
+  // Links (usa no mobile e desk)
+  // const menuLinks = [{},{},{}]
+
   // Estado para controlar se o dropdown pode aparecer
   const [showDrop, setShowDrop] = useState(false);
   return (
     <>
       <div className="flex flex-col min-h-screen">
         {/* Header */}
-        <header className="">
+        <header className="text-white">
           {/* Nav */}
-          <nav className="min-w-screen min-h-[75px] shadow-2xl flex items-center justify-around bg-primary-dark text-white">
+          <nav className="min-w-screen min-h-[75px] shadow-2xl flex items-center justify-around bg-primary-dark">
             <Link to={"/"}>
               <h1 className="font-bold text-2xl transition-all duration-200 hover:text-warning cursor-pointer ">
-                DevGastos
+                &lt;DevGastos/&gt;
               </h1>
             </Link>
             {/* Menu Desktop */}
-            <ul className="hidden sm:flex  gap-4">
+            <ul className="hidden sm:flex gap-4">
               <li className="relative">
                 <button onClick={() => setShowDrop(!showDrop)}>
                   <FaPlus className="transition-all duration-200 hover:text-warning cursor-pointer" />
@@ -73,33 +77,49 @@ const MainLayout = () => {
             <button
               onClick={() => {
                 setMenu(!menu);
-                console.log(menu);
               }}
               className="md:hidden text-3xl cursor-pointer"
             >
               <MdMenu />
             </button>
-            {/* Nav mobile */}
-            <nav className="hidden">
-              <ul className="flex gap-4">
-                <li>
-                  <Link to={"/novoGasto"} title="Cadastrar">
-                    <FaPlus className="transition-all duration-200 hover:text-warning cursor-pointer" />
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/gastos"} title="Listar">
-                    <FaListUl className="transition-all duration-200 hover:text-warning cursor-pointer" />
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/dashboard"} title="Dashboard">
-                    <FaChartPie className="transition-all duration-200 hover:text-warning cursor-pointer" />
-                  </Link>
-                </li>
-              </ul>
-            </nav>
           </nav>
+          {/* Menu mobile */}
+          <ul
+            className={`overflow-hidden w-full flex flex-col md:hidden pl-2 gap-4 bg-primary-dark transition-all duration-500 ${
+              menu ? "max-h-[500px] opacity-100" : "max-h-0"
+            }`}
+          >
+            <li className="mb-2">
+              <Link
+                to={"/novoGasto"}
+                title="Cadastrar"
+                className="flex items-center gap-2 "
+              >
+                <FaPlus className="transition-all duration-200 hover:text-warning cursor-pointer" />
+                <span>Link</span>
+              </Link>
+            </li>
+            <li className="mb-2">
+              <Link
+                to={"/gastos"}
+                title="Listar"
+                className="flex items-center gap-2 "
+              >
+                <FaListUl className="transition-all duration-200 hover:text-warning cursor-pointer" />
+                <span>Link</span>
+              </Link>
+            </li>
+            <li className="mb-2">
+              <Link
+                to={"/dashboard"}
+                title="Dashboard"
+                className="flex items-center gap-2 "
+              >
+                <FaChartPie className="transition-all duration-200 hover:text-warning cursor-pointer" />
+                <span>Link</span>
+              </Link>
+            </li>
+          </ul>
         </header>
         {/* Main */}
         <main className="flex-1">

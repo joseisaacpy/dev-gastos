@@ -22,6 +22,7 @@ const Dashboard = () => {
       return acumulador + gasto.preco;
     }, 0)
   );
+
   const totalRecebido = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -30,6 +31,7 @@ const Dashboard = () => {
       return acumulador + receita.valor;
     }, 0)
   );
+
   //   Quantidades
   const quantidadeGastos = gastos.length;
   const quantidadeReceitas = receitas.length;
@@ -52,12 +54,14 @@ const Dashboard = () => {
       setLoader(false);
     }
   };
-  //
+
+  // Chama função de consumir ao carregar tela
   useEffect(() => {
     consumirApi();
-    document.title = "Dashboard";
+    document.title = "Dashboard"; // Muda o title
   }, []);
 
+  // Se loader for true, mostra loader
   if (loader) {
     return <Loader />;
   }
@@ -65,8 +69,10 @@ const Dashboard = () => {
   return (
     <>
       <section className="px-4 py-2">
+        {/* Title */}
         <h1 className="text-3xl font-bold mb-3">Seu Dashboard</h1>
-        <div className=" grid grid-cols-1 md:grid-cols-3 gap-3">
+        {/* Div de cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <Card
             imagemUrl={
               "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
