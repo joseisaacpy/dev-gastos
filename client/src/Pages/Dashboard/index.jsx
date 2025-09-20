@@ -14,23 +14,24 @@ const Dashboard = () => {
   const [receitas, setReceitas] = useState([]);
 
   // Valor de totais
-  const totalGastado = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(
-    gastos.reduce((acumulador, gasto) => {
-      return acumulador + gasto.preco;
-    }, 0)
-  );
+  const totalGastado = gastos.reduce((acumulador, gasto) => {
+    return acumulador + gasto.preco;
+  }, 0);
 
-  const totalRecebido = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(
-    receitas.reduce((acumulador, receita) => {
-      return acumulador + receita.valor;
-    }, 0)
-  );
+  const totalRecebido = receitas.reduce((acumulador, receita) => {
+    return acumulador + receita.valor;
+  }, 0);
+
+  // Saldo (receitas - gastoss)
+  const saldo = totalRecebido - totalGastado;
+
+  // Função para formatar moeda
+  const formatarMoeda = (valor) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(valor);
+  };
 
   //   Quantidades
   const quantidadeGastos = gastos.length;
@@ -66,44 +67,38 @@ const Dashboard = () => {
     return <Loader />;
   }
 
+  // Conteúdo principal
   return (
     <>
       <section className="px-4 py-2">
         {/* Title */}
-        <h1 className="text-3xl font-bold mb-3">Seu Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-2">Seu Dashboard</h1>
         {/* Div de cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           <Card
-            imagemUrl={
-              "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
-            }
             nomeCartao={"Quantidade de Gastos"}
             valor={quantidadeGastos}
             tipo={"gasto"}
           />
           <Card
-            imagemUrl={
-              "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
-            }
             nomeCartao={"Quantidade de Receitas"}
             valor={quantidadeReceitas}
             tipo={"receita"}
           />
           <Card
-            imagemUrl={
-              "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
-            }
             nomeCartao={"Valor total gasto"}
-            valor={totalGastado}
+            valor={formatarMoeda(totalGastado)}
             tipo={"gasto"}
           />
           <Card
-            imagemUrl={
-              "https://images.pexels.com/photos/5466788/pexels-photo-5466788.jpeg"
-            }
             nomeCartao={"Valor total recebido"}
-            valor={totalRecebido}
+            valor={formatarMoeda(totalRecebido)}
             tipo={"receita"}
+          />
+          <Card
+            nomeCartao={"Saldo"}
+            valor={formatarMoeda(saldo)}
+            tipo={saldo < 0 ? "gasto" : "receita"}
           />
         </div>
       </section>
