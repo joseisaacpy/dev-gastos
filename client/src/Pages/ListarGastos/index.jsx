@@ -55,9 +55,12 @@ const ListarGastos = () => {
     pegarDados();
   }, []);
 
+  // Loader
   if (loading) {
     return <Loader />;
   }
+
+  // Conteúdo principal
   return (
     <>
       <section className="flex items-center justify-center ">
@@ -89,17 +92,17 @@ const ListarGastos = () => {
                 </tr>
               ) : (
                 gastos.map((gasto) => {
-                  {
-                    /* Preço formatado */
-                  }
+                  /* Preço formatado */
                   const precoGastoFormatado = new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
                   }).format(gasto.preco);
+
                   /* Data formatada */
-                  const dataFormatada = new Date(gasto.data).toLocaleString(
-                    "pt-BR"
-                  );
+                  const dataFormatada = new Date(gasto.data)
+                    .toLocaleString("pt-BR")
+                    .slice(0, 10);
+
                   return (
                     <tr
                       key={gasto.id}
@@ -120,7 +123,10 @@ const ListarGastos = () => {
                           >
                             <FaTrash className="text-red-600 hover:text-red-900 transition-all duration-300 cursor-pointer" />
                           </button>
-                          <button title="Editar gasto">
+                          <button
+                            title="Editar gasto"
+                            onClick={() => alert("desenvolvendo...")}
+                          >
                             <FaEdit className="text-blue-600 hover:text-blue-900 transition-all duration-300 cursor-pointer" />
                           </button>
                         </div>

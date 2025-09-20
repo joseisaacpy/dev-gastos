@@ -97,9 +97,9 @@ const ListarReceitas = () => {
                     currency: "BRL",
                   }).format(receita.valor);
                   /* Data formatada */
-                  const dataFormatada = new Date(receita.data).toLocaleString(
-                    "pt-BR"
-                  );
+                  const dataFormatada = new Date(receita.data)
+                    .toLocaleString("pt-BR")
+                    .slice(0, 10);
                   return (
                     <tr
                       key={receita.id}
