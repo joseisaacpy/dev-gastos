@@ -10,7 +10,7 @@ const Painel = () => {
     <>
       <main className="min-w-screen min-h-screen bg-gradient-to-bl from-primary to-primary-light">
         <section className="min-h-screen max-w-2xl mx-auto flex flex-col items-center justify-center gap-4">
-          <div>
+          <div className="pb-4">
             {/* Título */}
             <h1 className="text-3xl md:text-4xl text-center font-bold">
               Seja bem-vindo ao{" "}
@@ -23,7 +23,7 @@ const Painel = () => {
           </div>
 
           {/* Lista de links */}
-          <ul className="px-4 w-[95%] flex flex-col md:flex-row gap-4 justify-center items-center">
+          <ul className="px-5 w-full flex flex-col md:flex-row gap-4 justify-center items-center flex-wrap">
             <li className="w-full">
               <Link
                 to="/novoGasto"
