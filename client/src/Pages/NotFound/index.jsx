@@ -1,6 +1,10 @@
+// Hooks
 import { useEffect } from "react";
+
+// Link para navegação
 import { Link } from "react-router-dom";
 
+// Icons
 import { FaArrowLeft } from "react-icons/fa";
 
 const NotFound = () => {
@@ -12,9 +16,11 @@ const NotFound = () => {
     <>
       <section className="min-w-screen min-h-screen flex flex-col items-center justify-center bg-gradient-to-bl from-primary to-primary-light">
         <div className="flex flex-col items-center justify-center gap-2">
+          {/* Título */}
           <h1 className="text-4xl font-bold text-white text-center">
             Ops, página não encontrada...
           </h1>
+          {/* Botão de voltar */}
           <button className="">
             <Link
               to={"/"}
