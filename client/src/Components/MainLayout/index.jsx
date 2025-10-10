@@ -95,7 +95,12 @@ const MainLayout = () => {
           </article>
         </header>
         {/* Main */}
-        <main className="flex-1" onClick={() => setMenu(false)}>
+        <main
+          className={`flex-1 trnasition-all duration-300 ${
+            menu ? "blur-[3px]" : "blur-none"
+          }`}
+          onClick={() => setMenu(false)}
+        >
           <Outlet />
         </main>
         {/* Footer */}
