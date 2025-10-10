@@ -63,7 +63,7 @@ const ListarGastos = () => {
   // Conteúdo principal
   return (
     <>
-      <section className="flex items-center justify-center ">
+      <section className="flex items-center justify-center">
         <div className="overflow-x-auto mt-3 sm:mt-5 md:mt-8 rounded-md border shadow-md shadow-primary-dark">
           {/* Tabela */}
           <table className="min-w-full">
