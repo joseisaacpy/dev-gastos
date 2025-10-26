@@ -79,7 +79,7 @@ const CadastrarGasto = () => {
 
   return (
     <form
-      className="w-full max-w-md mx-auto mt-2 flex flex-col gap-3 p-2 bg-slate-100 shadow-md border border-slate-600 rounded-md"
+      className="w-full max-w-md mx-auto mt-2 flex flex-col gap-5 p-2 bg-slate-100 shadow-md border border-slate-600 rounded-md"
       onSubmit={handleSubmit}
     >
       {/* Título */}
