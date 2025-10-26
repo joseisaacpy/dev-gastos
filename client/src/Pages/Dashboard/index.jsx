@@ -13,6 +13,10 @@ const Dashboard = () => {
   const [gastos, setGastos] = useState([]);
   const [receitas, setReceitas] = useState([]);
 
+  // Estados para filtros
+  const [dataInicial, setDataInicial] = useState("");
+  const [dataFinal, setDataFinal] = useState("");
+
   // Valor de totais
   const totalGastado = gastos.reduce((acumulador, gasto) => {
     return acumulador + gasto.preco;
@@ -41,12 +45,15 @@ const Dashboard = () => {
   const consumirApi = async () => {
     try {
       const baseURL = import.meta.env.VITE_API_URL;
+
       const [resGastos, resReceitas] = await Promise.all([
         fetch(`${baseURL}/api/gastos`),
         fetch(`${baseURL}/api/receitas`),
       ]);
+
       const dataGasto = await resGastos.json();
       const dataReceita = await resReceitas.json();
+
       setGastos(dataGasto);
       setReceitas(dataReceita);
     } catch (error) {
@@ -73,6 +80,37 @@ const Dashboard = () => {
       <section className="px-4 py-2">
         {/* Title */}
         <h1 className="text-3xl font-bold mb-2">Seu Dashboard</h1>
+        {/* Div de inputs de filtro */}
+        <div className="flex flex-wrap justify-center gap-4 mb-4">
+          <div className="flex flex-col w-full md:w-auto">
+            {/* Data inicial */}
+            <label htmlFor="data-inicial" className="font-bold">
+              Data inicial
+            </label>
+            <input
+              type="date"
+              name="data-inicial"
+              id="data-inicial"
+              className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-blue-400 transition-all"
+              value={dataInicial}
+              onChange={(e) => setDataInicial(e.target.value)}
+            />
+          </div>
+          {/* Data final */}
+          <div className="flex flex-col w-full md:w-auto">
+            <label htmlFor="data-inicial" className="font-bold">
+              Data final:
+            </label>
+            <input
+              type="date"
+              name="data-final"
+              id="data-final"
+              className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-blue-400 transition-all"
+              value={dataFinal}
+              onChange={(e) => setDataFinal(e.target.value)}
+            />
+          </div>
+        </div>
         {/* Div de cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           <Card
