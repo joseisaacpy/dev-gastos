@@ -17,30 +17,6 @@ const Dashboard = () => {
   const [dataInicial, setDataInicial] = useState("");
   const [dataFinal, setDataFinal] = useState("");
 
-  // Valor de totais
-  const totalGastado = gastos.reduce((acumulador, gasto) => {
-    return acumulador + gasto.preco;
-  }, 0);
-
-  const totalRecebido = receitas.reduce((acumulador, receita) => {
-    return acumulador + receita.valor;
-  }, 0);
-
-  // Saldo (receitas - gastoss)
-  const saldo = totalRecebido - totalGastado;
-
-  // Função para formatar moeda
-  const formatarMoeda = (valor) => {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(valor);
-  };
-
-  //   Quantidades
-  const quantidadeGastos = gastos.length;
-  const quantidadeReceitas = receitas.length;
-
   // Função de consumir API
   const consumirApi = async () => {
     try {
@@ -73,6 +49,47 @@ const Dashboard = () => {
   if (loader) {
     return <Loader />;
   }
+
+  // Função de filtro por data
+  const filtrarPorData = (lista, campoData) => {
+    return lista.filter((item) => {
+      const dataItem = new Date(item[campoData]);
+      const inicio = dataInicial ? new Date(dataInicial) : null;
+      const fim = dataFinal ? new Date(dataFinal) : null;
+      // Valida datas
+      if (inicio && dataItem < inicio) return false;
+      if (fim && dataItem > fim) return false;
+      return true;
+    });
+  };
+
+  // Aplica filtros
+  const gastosFiltrados = filtrarPorData(gastos, "data");
+  const receitasFiltradas = filtrarPorData(receitas, "data");
+
+  // Cálculos
+  const totalGastado = gastosFiltrados.reduce((acumulador, gasto) => {
+    return acumulador + gasto.preco;
+  }, 0);
+
+  const totalRecebido = receitasFiltradas.reduce((acumulador, receita) => {
+    return acumulador + receita.valor;
+  }, 0);
+
+  // Saldo (receitas - gastoss)
+  const saldo = totalRecebido - totalGastado;
+
+  // Função para formatar moeda
+  const formatarMoeda = (valor) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(valor);
+  };
+
+  //   Quantidades
+  const quantidadeGastos = gastosFiltrados.length;
+  const quantidadeReceitas = receitasFiltradas.length;
 
   // Conteúdo principal
   return (
